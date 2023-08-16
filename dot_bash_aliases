@@ -1,0 +1,2 @@
+alias explorer="explorer.exe ."
+alias vim="nvim"

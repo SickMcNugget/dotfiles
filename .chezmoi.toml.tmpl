@@ -1,0 +1,19 @@
+{{- $work := false -}}{{/* true on work machine */}}
+{{- "" -}}
+
+{{- $hostname := .chezmoi.hostname -}}
+{{- if eq $hostname "j-work" -}}
+{{-		$work = true -}}
+{{- end -}}
+
+{{- $email := protonPass "pass://Personal/gitconfig/Email" | trim -}}
+{{- $name := protonPass "pass://Personal/gitconfig/Name" | trim -}}
+{{- if $work -}}
+{{-		$email = protonPass "pass://Work/gitconfig/Email" | trim -}}
+{{-		$name = protonPass "pass://Work/gitconfig/Name" | trim -}}
+{{- end -}}
+
+[data]
+	email = {{ $email | quote }}
+	name = {{ $name | quote }}
+	work = {{ $work }}

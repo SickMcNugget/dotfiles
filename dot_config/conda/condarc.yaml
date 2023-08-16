@@ -1,0 +1,22 @@
+channels:
+    # - conda-forge
+    - defaults
+
+auto_update_conda: False
+always_yes: False
+show_channel_urls: True
+changeps1: True
+add_pip_as_python_dependency: True
+use_pip: True
+ssl_verify: True
+
+offline: False
+
+allow_softlinks: True
+update_dependencies: False
+add_anaconda_token: True
+
+repodata_threads: None
+verify_threads: 1
+execute_threads: 1
+default_threads: None
