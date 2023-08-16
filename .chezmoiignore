@@ -1,5 +1,5 @@
 .config/tmux/plugins
 
 .config/nvim/lazy-lock.lua
-.config/nvim/.git
+.config/nvim/.git/
 .config/nvim/.gitignore
