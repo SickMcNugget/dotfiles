@@ -5,5 +5,7 @@ sudo apt-get install tmux ripgrep
 {{ else if eq .chezmoi.osRelease.id "arch" -}}
 pacman -S tmux ripgrep
 {{ end -}}
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
+    git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
+fi
 {{ end -}}
