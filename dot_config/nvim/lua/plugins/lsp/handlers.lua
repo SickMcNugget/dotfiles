@@ -29,15 +29,15 @@ local function lsp_keymaps(bufnr)
 	keymap("<C-k>", vim.lsp.buf.signature_help, "Signature Documentation")
 end
 
-local function formatting(bufnr)
-  vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
-    vim.lsp.buf.format()
-  end, { desc = 'Format current buffer with LSP' })
-end
+-- local function formatting(bufnr)
+--   vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
+--     vim.lsp.buf.format()
+--   end, { desc = 'Format current buffer with LSP' })
+-- end
 
 ret.on_attach = function(_, bufnr)
 	lsp_keymaps(bufnr)
-	formatting(bufnr)
+	-- formatting(bufnr)
 end
 
 return ret

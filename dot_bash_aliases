@@ -1,2 +1,2 @@
-alias explorer="explorer.exe ."
+alias explorer="explorer.exe"
 alias vim="nvim"
