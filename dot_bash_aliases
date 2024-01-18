@@ -1,2 +1,3 @@
 alias explorer="explorer.exe"
 alias vim="nvim"
+alias mkctl="microk8s kubectl"
