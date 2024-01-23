@@ -3,7 +3,7 @@
 {{ if eq .chezmoi.os "linux" -}}
 {{ if eq .chezmoi.osRelease.id "ubuntu" -}}
 sudo apt-get install tmux ripgrep ninja-build gettext cmake unzip curl
-{{ if eq .chezmoi.osRelease.id "debian" -}}
+{{ else if eq .chezmoi.osRelease.id "debian" -}}
 sudo apt-get install tmux ripgrep ninja-build gettext cmake unzip curl
 {{ else if eq .chezmoi.osRelease.id "arch" -}}
 pacman -S tmux ripgrep base-devel ninja cmake unzip curl
