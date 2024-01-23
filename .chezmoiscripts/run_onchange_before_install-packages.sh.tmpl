@@ -4,7 +4,7 @@
 {{ if eq .chezmoi.osRelease.id "ubuntu" -}}
 sudo apt-get install tmux ripgrep ninja-build gettext cmake unzip curl
 {{ else if eq .chezmoi.osRelease.id "debian" -}}
-sudo apt-get install tmux ripgrep ninja-build gettext cmake unzip curl
+sudo apt-get install tmux ripgrep ninja-build gettext cmake unzip curl python3.11-venv
 {{ else if eq .chezmoi.osRelease.id "arch" -}}
 pacman -S tmux ripgrep base-devel ninja cmake unzip curl
 {{ end -}}
