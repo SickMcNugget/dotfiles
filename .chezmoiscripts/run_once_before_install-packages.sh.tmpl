@@ -1,6 +1,7 @@
-#!/bin/sh
-
 {{ if eq .chezmoi.os "linux" -}}
+#!/usr/bin/env sh
+
+# Distro-specific package installs (ubuntu and debian separated for potential deviation)
 {{ if eq .chezmoi.osRelease.id "ubuntu" -}}
 sudo apt-get install tmux ripgrep ninja-build gettext cmake unzip curl
 {{ else if eq .chezmoi.osRelease.id "debian" -}}
@@ -9,7 +10,19 @@ sudo apt-get install tmux ripgrep ninja-build gettext cmake unzip curl python3.1
 pacman -S tmux ripgrep base-devel ninja cmake unzip curl
 {{ end -}}
 
+# Installing tpm and neovim from source
 if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
     git clone "https://github.com/tmux-plugins/tpm" "$HOME/.tmux/plugins/tpm" && "$HOME/.tmux/plugins/tpm/bin/install_plugins"
+else
+    echo "tmux: tpm already installed"
+fi
+
+if [ -f /usr/local/bin/nvim ] || [ -f /usr/bin/nvim ] || [ -d "$HOME/neovim" ]; then
+    echo "Neovim: Already installed"
+else
+    git clone https://github.com/neovim/neovim.git "$HOME/neovim"
+    cd "$HOME/neovim"
+    make CMAKE_BUILD_TYPE=Release
+    sudo make install
 fi
 {{ end -}}
