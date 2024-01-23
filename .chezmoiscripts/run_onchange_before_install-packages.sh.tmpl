@@ -1,10 +1,14 @@
 #!/bin/sh
+
 {{ if eq .chezmoi.os "linux" -}}
 {{ if eq .chezmoi.osRelease.id "ubuntu" -}}
-sudo apt-get install tmux ripgrep
+sudo apt-get install tmux ripgrep ninja-build gettext cmake unzip curl
+{{ if eq .chezmoi.osRelease.id "debian" -}}
+sudo apt-get install tmux ripgrep ninja-build gettext cmake unzip curl
 {{ else if eq .chezmoi.osRelease.id "arch" -}}
-pacman -S tmux ripgrep
+pacman -S tmux ripgrep base-devel ninja cmake unzip curl
 {{ end -}}
+
 if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
     git clone "https://github.com/tmux-plugins/tpm" "$HOME/.tmux/plugins/tpm" && "$HOME/.tmux/plugins/tpm/bin/install_plugins"
 fi
