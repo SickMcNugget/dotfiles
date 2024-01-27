@@ -8,4 +8,5 @@ return {
 			section_separators = '',
 		},
 	},
+    event = { "UIEnter" },
 }

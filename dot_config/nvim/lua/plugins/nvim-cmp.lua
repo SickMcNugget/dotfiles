@@ -4,6 +4,7 @@
 return {
 	-- autocomplete
 	"hrsh7th/nvim-cmp",
+    event = { "LspAttach" },
 	dependencies = {
 		-- Snippet engine
 		"L3MON4D3/LuaSnip",

@@ -4,7 +4,8 @@ require("lazy-plugins")
 
 -- Themes are currently:
 -- - onedark
-local theme = "onedark"
+-- - tokyonight
+local theme = "tokyonight"
 
 pcall(require, "plugins.theme." .. theme)
 
