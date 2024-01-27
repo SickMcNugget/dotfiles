@@ -33,7 +33,7 @@ local opts = {
 	checker = {
 		enabled = false,
 		concurrency = nil,
-		notify = true,
+		notify = false,
 		frequency = 3600, --seconds
 	},
 	change_detection = {
@@ -52,6 +52,7 @@ local opts = {
 				"tohtml",
 				"tutor",
 				"zipPlugin",
+				"osc52",
 			},
 		},
 	},
