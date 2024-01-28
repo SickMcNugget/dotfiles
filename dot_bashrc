@@ -135,3 +135,18 @@ unset __conda_setup
 export LD_LIBRARY_PATH=/usr/lib/wsl/lib
 export JAVA_HOME="/usr/lib/jvm/java-1.11.0-openjdk-amd64"
 export PATH=$JAVA_HOME/bin:$PATH
+
+# >>> juliaup initialize >>>
+
+# !! Contents within this block are managed by juliaup !!
+
+case ":$PATH:" in
+    *:/home/joren/.juliaup/bin:*)
+        ;;
+
+    *)
+        export PATH=/home/joren/.juliaup/bin${PATH:+:${PATH}}
+        ;;
+esac
+
+# <<< juliaup initialize <<<
