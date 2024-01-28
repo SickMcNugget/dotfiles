@@ -3,7 +3,7 @@
 return {
 	"nvim-telescope/telescope.nvim",
 	branch = "0.1.x",
-    event = { "VeryLazy" },
+	event = { "VeryLazy" },
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 		{
@@ -44,7 +44,7 @@ return {
 				winblend = 10,
 				previewer = false,
 			}))
-		end, { desc = "[/] Fuzzily search in current buffer" })
+			end, { desc = "[/] Fuzzily search in current buffer" })
 
 		local builtin = require("telescope.builtin")
 		vim.keymap.set("n", "<leader>gf", builtin.git_files, { desc = "Search [G]it [F]iles" })
