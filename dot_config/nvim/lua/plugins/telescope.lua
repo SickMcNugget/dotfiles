@@ -2,7 +2,7 @@
 -- See `:help telescope` and `:help telescope.setup()`
 return {
 	"nvim-telescope/telescope.nvim",
-	branch = "0.1.x",
+	tag = "0.1.5",
 	event = { "VeryLazy" },
 	dependencies = {
 		"nvim-lua/plenary.nvim",

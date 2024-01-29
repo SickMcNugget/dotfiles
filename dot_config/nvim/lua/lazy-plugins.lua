@@ -17,7 +17,7 @@ local opts = {
 		lazy = true,
 	},
 	install = {
-		colorscheme = { "onedark", "habamax" },
+		colorscheme = { "tokyonight" },
 	},
 	ui = {
 		border = "single",
@@ -38,11 +38,14 @@ local opts = {
 	},
 	change_detection = {
 		enabled = true,
-		notify = false,
+		notify = true,
 	},
 	performance = {
+		cache = {
+			enabled = true,
+		},
 		rtp = {
-			reset = false,
+			reset = true,
 			disabled_plugins = {
 				"gzip",
 				-- "matchit",
@@ -63,4 +66,156 @@ if not status_ok then
 	return
 end
 
-lazy.setup("plugins", opts)
+lazy.setup({
+	{
+		"tpope/vim-rhubarb",
+		cmd = { "Git" },
+	},
+	{
+		"tpope/vim-sleuth",
+		event = { "BufReadPost", "BufNewFile", "BufFilePost" },
+	},
+	{
+		"nvim-lualine/lualine.nvim",
+		event = { "UIEnter" },
+		opts = {
+			require("plugins.opts.lualine"),
+		},
+	},
+	{
+		"numToStr/Comment.nvim",
+		event = { "BufReadPost", "BufNewFile" },
+	},
+	{
+		"alker0/chezmoi.vim",
+		lazy = false,
+		init = function()
+			vim.g["chezmoi#use_tmp_buffer"] = true
+		end,
+	},
+	{
+		require("plugins.undotree"),
+	},
+	{
+		"lewis6991/gitsigns.nvim",
+		event = { "BufReadPost", "BufNewFile" },
+		opts = {
+			require("plugins.opts.gitsigns"),
+		},
+	},
+	{
+		require("plugins.nvim-cmp"),
+	},
+	{
+		"tpope/vim-fugitive",
+		cmd = { "Git" },
+	},
+	{
+		require("plugins.telescope"),
+	},
+	{
+		"folke/which-key.nvim",
+		event = "VeryLazy",
+		init = function()
+			vim.o.timeout = true
+			vim.o.timeoutlen = 300
+		end,
+	},
+	{
+		"folke/tokyonight.nvim",
+		lazy = false,
+		priority = 1000,
+		opts = {
+			style = "moon",
+		},
+	},
+	{
+		require("plugins.treesitter"),
+	},
+	{
+		"lukas-reineke/indent-blankline.nvim",
+		main = "ibl",
+		event = { "UIEnter" },
+		opts = {
+			indent = { char = "┊" },
+			scope = { exclude = { language = { "python" } } },
+		},
+	},
+	{
+		"neovim/nvim-lspconfig",
+		event = { "BufReadPost", "BufNewFile" },
+		dependencies = {
+			{
+				require("plugins.neodev"),
+			},
+			{
+				require("plugins.mason"),
+			},
+			{
+				"j-hui/fidget.nvim",
+				opts = {
+					--require("plugins.opts.fidget")
+				},
+			},
+		},
+	},
+	{
+		"mfussenegger/nvim-dap",
+		keys = {
+			-- 	Add arguments later by following this link: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/plugins/extras/dap/core.lua
+			{
+				"<F5>",
+				function()
+					require("dap").continue()
+				end,
+				desc = "Debug: Start/Continue",
+			},
+			{
+				"<F1>",
+				function()
+					require("dap").step_into()
+				end,
+				desc = "Debug: Step Into",
+			},
+			{
+				"<F2>",
+				function()
+					require("dap").step_over()
+				end,
+				desc = "Debug: Step Over",
+			},
+			{
+				"<F3>",
+				function()
+					require("dap").step_out()
+				end,
+				desc = "Debug: Step Out",
+			},
+			{
+				"<leader>b",
+				function()
+					require("dap").continue()
+				end,
+				desc = "Debug: Toggle Breakpoint",
+			},
+			{
+				"<leader>B",
+				function()
+					require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))
+				end,
+				desc = "Debug: Set Breakpoint",
+			},
+		},
+		dependencies = {
+			{
+				require("plugins.nvim-dap-ui"),
+			},
+			{
+				require("plugins.mason-nvim-dap"),
+			},
+		},
+	},
+	{
+		require("plugins.formatter"),
+	},
+}, opts)
