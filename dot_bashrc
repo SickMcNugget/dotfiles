@@ -134,7 +134,7 @@ unset __conda_setup
 # So tensorflow can find cuda libraries
 export LD_LIBRARY_PATH=/usr/lib/wsl/lib
 export JAVA_HOME="/usr/lib/jvm/java-1.11.0-openjdk-amd64"
-export PATH=$JAVA_HOME/bin:$PATH
+export PATH="$JAVA_HOME/bin:${PATH:+${PATH}}"
 
 # >>> juliaup initialize >>>
 
@@ -150,3 +150,10 @@ case ":$PATH:" in
 esac
 
 # <<< juliaup initialize <<<
+
+if [ -d "/usr/local/texlive" ]; then
+    export MANPATH="/usr/local/texlive/2023/texmf-dist/doc/man${MANPATH:+:${MANPATH}}"
+    export INFOPATH="/usr/local/texlive/2023/texmf-dist/doc/info${INFOPATH:+:${INFOPATH}}"
+    export PATH="/usr/local/texlive/2023/bin/x86_64-linux${PATH:+:${PATH}}"
+fi
+
