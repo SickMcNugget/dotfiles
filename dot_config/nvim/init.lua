@@ -3,10 +3,7 @@ require("joren")
 require("lazy-plugins")
 
 -- Themes are currently:
--- - onedark
--- - tokyonight
+-- local theme = "onedark"
 local theme = "tokyonight"
-
-pcall(require, "plugins.theme." .. theme)
 
 vim.cmd.colorscheme(theme)

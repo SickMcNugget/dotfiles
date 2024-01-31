@@ -72,20 +72,33 @@ lazy.setup({
 		cmd = { "Git" },
 	},
 	{
+		"tpope/vim-fugitive",
+		cmd = { "Git" },
+	},
+	{
 		"tpope/vim-sleuth",
 		event = { "BufReadPost", "BufNewFile", "BufFilePost" },
 	},
 	{
 		"nvim-lualine/lualine.nvim",
 		event = { "UIEnter" },
-		opts = {
-			require("plugins.opts.lualine"),
-		},
+		opts = require("plugins.opts.lualine"),
 	},
 	{
 		"numToStr/Comment.nvim",
-		event = { "BufReadPost", "BufNewFile" },
-	},
+		keys = {
+			{ "gb", mode = "o" },
+			{ "gc", mode = "o" },
+			{ "gcc" },
+			{ "gbc" },
+			{ "gco" },
+			{ "gcO" },
+			{ "gcA" },
+			{ "gc", mode = "x" },
+			{ "gb", mode = "x" },
+		},
+		opts = require("plugins.opts.Comment"),
+    },
 	{
 		"alker0/chezmoi.vim",
 		lazy = false,
@@ -95,20 +108,21 @@ lazy.setup({
 	},
 	{
 		require("plugins.undotree"),
+		"mbbill/undotree",
+		keys = {
+			{ "<leader>u", "<cmd>UndotreeToggle<cr>", desc = "UndoTree Toggle" },
+		},
+		config = function()
+			vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
+		end,
 	},
 	{
 		"lewis6991/gitsigns.nvim",
 		event = { "BufReadPost", "BufNewFile" },
-		opts = {
-			require("plugins.opts.gitsigns"),
-		},
+		opts = require("plugins.opts.gitsigns"),
 	},
 	{
 		require("plugins.nvim-cmp"),
-	},
-	{
-		"tpope/vim-fugitive",
-		cmd = { "Git" },
 	},
 	{
 		require("plugins.telescope"),
@@ -153,9 +167,7 @@ lazy.setup({
 			},
 			{
 				"j-hui/fidget.nvim",
-				opts = {
-					--require("plugins.opts.fidget")
-				},
+				opts = require("plugins.opts.fidget"),
 			},
 		},
 	},
@@ -216,6 +228,8 @@ lazy.setup({
 		},
 	},
 	{
-		require("plugins.formatter"),
+		"mhartington/formatter.nvim",
+		cmd = { "Format" },
+		config = require("plugins.config.formatter"),
 	},
 }, opts)
