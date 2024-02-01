@@ -26,3 +26,16 @@ else
     sudo make install
 fi
 {{ end -}}
+
+if [ -f "$HOME/.local/share/fonts/FiraMonoNerdFontMono-Regular.otf" ]; then
+    echo "NerdFonts: FiraMono already installed"
+else
+    if  [ ! -d "$HOME/.local/share/fonts" ]; then
+        mkdir -p "$HOME/.local/share/fonts"
+    fi
+    cd "$HOME/.local/share/fonts"
+    curl -OL https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FiraMono.tar.xz 
+    tar -xf "FiraMono.tar.xz"
+    rm "FiraMono.tar.xz"
+    cd - >/dev/null
+fi
