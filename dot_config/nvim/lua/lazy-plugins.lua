@@ -235,7 +235,21 @@ lazy.setup({
 	{
 		"iamcco/markdown-preview.nvim",
 		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-		-- ft = { "markdown" },
 		build = function() vim.fn["mkdp#util#install"]() end,
+		-- init function below provided by a lovely GitHub user @anuramat
+		-- https://github.com/iamcco/markdown-preview.nvim/issues/585#issuecomment-1724859362
+		init = function()
+			local function load_then_exec(cmd)
+				return function()
+					vim.cmd.delcommand(cmd)
+					require('lazy').load({ plugins = { 'markdown-preview.nvim' } })
+					vim.api.nvim_exec_autocmds('BufEnter', {}) -- commands appear only after BufEnter
+					vim.cmd(cmd)
+				end
+			end
+			for _, cmd in pairs({ 'MarkdownPreview', 'MarkdownPreviewStop', 'MarkdownPreviewToggle' }) do
+				vim.api.nvim_create_user_command(cmd, load_then_exec(cmd), {})
+			end
+		end,
 	},
 }, opts)
