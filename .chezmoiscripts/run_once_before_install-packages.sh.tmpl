@@ -3,9 +3,9 @@
 
 # Distro-specific package installs (ubuntu and debian separated for potential deviation)
 {{ if eq .chezmoi.osRelease.id "ubuntu" -}}
-sudo apt-get install tmux ripgrep ninja-build gettext cmake unzip curl fd-find
+sudo apt-get install tmux ripgrep ninja-build gettext cmake unzip curl fd-find zathura
 {{ else if eq .chezmoi.osRelease.id "debian" -}}
-sudo apt-get install tmux ripgrep ninja-build gettext cmake unzip curl python3.11-venv fd-find
+sudo apt-get install tmux ripgrep ninja-build gettext cmake unzip curl python3.11-venv fd-find zathura
 {{ else if eq .chezmoi.osRelease.id "arch" -}}
 pacman -S tmux ripgrep base-devel ninja cmake unzip curl fd
 {{ end -}}
@@ -25,7 +25,6 @@ else
     make CMAKE_BUILD_TYPE=Release
     sudo make install
 fi
-{{ end -}}
 
 if [ -f "$HOME/.local/share/fonts/FiraMonoNerdFontMono-Regular.otf" ]; then
     echo "NerdFonts: FiraMono already installed"
@@ -39,3 +38,4 @@ else
     rm "FiraMono.tar.xz"
     cd - >/dev/null
 fi
+{{ end -}}
