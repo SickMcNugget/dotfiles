@@ -15,7 +15,8 @@ vim.o.mouse = "a"
 -- Sync clipboard between OS and Neovim.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
-vim.o.clipboard = "unnamedplus"
+--  Note that this resulted in massive slowdown for startup (~250ms)
+-- vim.o.clipboard = "unnamedplus"
 
 -- Enable break indent
 vim.o.breakindent = true
@@ -66,4 +67,3 @@ vim.g.loaded_ruby_provider = 0
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
-

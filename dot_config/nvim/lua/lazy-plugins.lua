@@ -98,7 +98,7 @@ lazy.setup({
 			{ "gb", mode = "x" },
 		},
 		opts = require("plugins.opts.Comment"),
-    },
+	},
 	{
 		"alker0/chezmoi.vim",
 		lazy = false,
