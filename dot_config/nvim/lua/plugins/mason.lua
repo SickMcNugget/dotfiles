@@ -10,6 +10,7 @@ return {
 	local auto_install = {
 	    "pylsp",
 	    "lua_ls",
+	    "texlab",
 	}
 
 	mason.setup({

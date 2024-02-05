@@ -107,7 +107,6 @@ lazy.setup({
 		end,
 	},
 	{
-		require("plugins.undotree"),
 		"mbbill/undotree",
 		keys = {
 			{ "<leader>u", "<cmd>UndotreeToggle<cr>", desc = "UndoTree Toggle" },
@@ -251,5 +250,13 @@ lazy.setup({
 				vim.api.nvim_create_user_command(cmd, load_then_exec(cmd), {})
 			end
 		end,
+	},
+	{
+		"lervag/vimtex",
+		lazy=false,
+		init = function()
+			vim.g.vimtex_view_method = "zathura"
+			vim.g.vimtex_compiler_method = "latexmk"
+		end
 	},
 }, opts)
