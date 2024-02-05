@@ -6,11 +6,11 @@ return {
 		"nvim-treesitter/nvim-treesitter-textobjects",
 	},
 	build = ":TSUpdate",
-	event = { "VeryLazy" },
+	event = { "BufReadPost", "BufNewFile" },
 	config = function()
 		require("nvim-treesitter.configs").setup({
 			-- Add languages to be installed here that you want installed for treesitter
-			ensure_installed = { "bash", "c", "cpp", "lua", "python", "vimdoc", "vim" },
+			ensure_installed = { "bash", "c", "cpp", "latex", "lua", "python", "vimdoc", "vim" },
 
 			-- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
 			auto_install = false,
