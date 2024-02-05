@@ -232,4 +232,10 @@ lazy.setup({
 		cmd = { "Format" },
 		config = require("plugins.config.formatter"),
 	},
+	{
+		"iamcco/markdown-preview.nvim",
+		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+		ft = { "markdown" },
+		build = function() vim.fn["mkdp#util#install"]() end,
+	},
 }, opts)
