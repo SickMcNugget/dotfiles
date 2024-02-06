@@ -157,3 +157,7 @@ if [ -d "/usr/local/texlive" ]; then
     export PATH="/usr/local/texlive/2023/bin/x86_64-linux${PATH:+:${PATH}}"
 fi
 
+if [ -d "/usr/local/go/bin" ]; then
+    export PATH="$PATH:/usr/local/go/bin"
+fi
+
