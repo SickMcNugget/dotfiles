@@ -6,10 +6,8 @@
     sudo apt update && sudo apt install tmux ripgrep ninja-build gettext cmake unzip curl fd-find zathura
     {{ if eq .chezmoi.osRelease.id "ubuntu" -}}
         sudo apt install python3.11-venv
-        {{ else if eq .chezmoi.osRelease.id "debian" -}}
-        if [ ! -f /usr/bin/command-not-found ]; then
-            sudo apt install command-not-found && sudo update-command-not-found && sudo apt update
-        fi
+    {{ else if eq .chezmoi.osRelease.id "debian" -}}
+        sudo apt install command-not-found && sudo update-command-not-found && sudo apt update
     {{ end -}}
 {{ else if eq .chezmoi.osRelease.id "arch" -}}
     pacman -S tmux ripgrep base-devel ninja cmake unzip curl fd
