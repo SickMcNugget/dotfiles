@@ -121,20 +121,6 @@ export LD_LIBRARY_PATH=/usr/lib/wsl/lib
 export JAVA_HOME="/usr/lib/jvm/java-1.11.0-openjdk-amd64"
 export PATH="$JAVA_HOME/bin:${PATH:+${PATH}}"
 
-# >>> juliaup initialize >>>
-
-# !! Contents within this block are managed by juliaup !!
-
-case ":$PATH:" in
-    *:/home/joren/.juliaup/bin:*)
-        ;;
-
-    *)
-        export PATH=/home/joren/.juliaup/bin${PATH:+:${PATH}}
-        ;;
-esac
-
-# <<< juliaup initialize <<<
 
 # Set default MANPATH
 if [ -z "$MANPATH" ]; then
@@ -154,4 +140,10 @@ fi
 
 if [ -d "$HOME/.rbenv/" ]; then
     eval "$(~/.rbenv/bin/rbenv init - bash)"
+fi
+
+# Mojo
+if [ -d "$HOME/.modular" ]; then
+    export MODULAR_HOME="$HOME/.modular"
+    export PATH="$MODULAR_HOME/pkg/packages.modular.com_mojo/bin:$PATH"
 fi
