@@ -53,8 +53,8 @@ local opts = {
 				-- "netrwPlugin",
 				"tarPlugin",
 				"tohtml",
-				"tutor",
 				"zipPlugin",
+				"tutor",
 				"osc52",
 			},
 		},
@@ -146,6 +146,16 @@ lazy.setup({
 		require("plugins.treesitter"),
 	},
 	{
+		"kylechui/nvim-surround",
+		version = "*", -- Use for stability; omit to use `main` branch for the latest features
+		event = "VeryLazy",
+		config = function()
+			require("nvim-surround").setup({
+				-- Configuration here, or leave empty to use defaults
+			})
+		end,
+	},
+	{
 		"lukas-reineke/indent-blankline.nvim",
 		main = "ibl",
 		event = { "UIEnter" },
@@ -227,36 +237,47 @@ lazy.setup({
 		},
 	},
 	{
-		"mhartington/formatter.nvim",
-		cmd = { "Format" },
-		config = require("plugins.config.formatter"),
+		"stevearc/conform.nvim",
+		event = "VeryLazy",
+		opts = {
+			format_on_save = {
+				timeout_ms = 500,
+				lsp_fallback = true,
+			},
+			formatters_by_ft = {
+				lua = { "stylua" },
+				python = { "black" },
+			},
+		},
 	},
 	{
 		"iamcco/markdown-preview.nvim",
 		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-		build = function() vim.fn["mkdp#util#install"]() end,
+		build = function()
+			vim.fn["mkdp#util#install"]()
+		end,
 		-- init function below provided by a lovely GitHub user @anuramat
 		-- https://github.com/iamcco/markdown-preview.nvim/issues/585#issuecomment-1724859362
 		init = function()
 			local function load_then_exec(cmd)
 				return function()
 					vim.cmd.delcommand(cmd)
-					require('lazy').load({ plugins = { 'markdown-preview.nvim' } })
-					vim.api.nvim_exec_autocmds('BufEnter', {}) -- commands appear only after BufEnter
+					require("lazy").load({ plugins = { "markdown-preview.nvim" } })
+					vim.api.nvim_exec_autocmds("BufEnter", {}) -- commands appear only after BufEnter
 					vim.cmd(cmd)
 				end
 			end
-			for _, cmd in pairs({ 'MarkdownPreview', 'MarkdownPreviewStop', 'MarkdownPreviewToggle' }) do
+			for _, cmd in pairs({ "MarkdownPreview", "MarkdownPreviewStop", "MarkdownPreviewToggle" }) do
 				vim.api.nvim_create_user_command(cmd, load_then_exec(cmd), {})
 			end
 		end,
 	},
 	{
 		"lervag/vimtex",
-		lazy=false,
+		lazy = false,
 		init = function()
 			vim.g.vimtex_view_method = "zathura"
 			vim.g.vimtex_compiler_method = "latexmk"
-		end
+		end,
 	},
 }, opts)
