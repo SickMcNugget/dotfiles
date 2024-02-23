@@ -68,12 +68,8 @@ end
 
 lazy.setup({
 	{
-		"tpope/vim-rhubarb",
-		cmd = { "Git" },
-	},
-	{
 		"tpope/vim-fugitive",
-		cmd = { "Git" },
+		event = "VeryLazy",
 	},
 	{
 		"tpope/vim-sleuth",
