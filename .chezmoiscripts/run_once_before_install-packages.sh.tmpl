@@ -3,9 +3,8 @@
 
 # Distro-specific package installs (ubuntu and debian separated for potential deviation)
 {{ if eq .chezmoi.osRelease.id "ubuntu" "debian" -}}
-    sudo apt update && sudo apt install tmux ripgrep ninja-build gettext cmake unzip curl fd-find zathura
+    sudo apt update && sudo apt install tmux ripgrep ninja-build gettext cmake unzip curl fd-find zathura python3.11-venv
     {{ if eq .chezmoi.osRelease.id "ubuntu" -}}
-        sudo apt install python3.11-venv
     {{ else if eq .chezmoi.osRelease.id "debian" -}}
         sudo apt install command-not-found && sudo update-command-not-found && sudo apt update
     {{ end -}}
