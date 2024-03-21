@@ -211,7 +211,7 @@ lazy.setup({
 			{
 				"<leader>b",
 				function()
-					require("dap").continue()
+					require("dap").toggle_breakpoint()
 				end,
 				desc = "Debug: Toggle Breakpoint",
 			},
