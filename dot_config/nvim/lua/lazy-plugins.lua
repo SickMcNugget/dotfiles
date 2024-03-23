@@ -110,6 +110,7 @@ lazy.setup({
 		config = function()
 			vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
 		end,
+		opts = {},
 	},
 	{
 		"lewis6991/gitsigns.nvim",
@@ -129,6 +130,7 @@ lazy.setup({
 			vim.o.timeout = true
 			vim.o.timeoutlen = 300
 		end,
+		opts = {},
 	},
 	{
 		"folke/tokyonight.nvim",
@@ -145,11 +147,12 @@ lazy.setup({
 		"kylechui/nvim-surround",
 		version = "*", -- Use for stability; omit to use `main` branch for the latest features
 		event = "VeryLazy",
-		config = function()
-			require("nvim-surround").setup({
-				-- Configuration here, or leave empty to use defaults
-			})
-		end,
+		opts = {},
+		-- config = function()
+		-- 	require("nvim-surround").setup({
+		-- 		-- Configuration here, or leave empty to use defaults
+		-- 	})
+		-- end,
 	},
 	{
 		"lukas-reineke/indent-blankline.nvim",
@@ -231,6 +234,7 @@ lazy.setup({
 				require("plugins.mason-nvim-dap"),
 			},
 		},
+		opts = {},
 	},
 	{
 		"stevearc/conform.nvim",
@@ -274,6 +278,19 @@ lazy.setup({
 		init = function()
 			vim.g.vimtex_view_method = "zathura"
 			vim.g.vimtex_compiler_method = "latexmk"
+		end,
+	},
+	{
+		"kkoomen/vim-doge",
+		lazy = false,
+		build = function()
+			vim.fn["doge#install"]()
+		end,
+		init = function()
+			vim.g["doge_doc_standard_python"] = "numpy"
+		end,
+		config = function()
+			vim.keymap.set("n", "<Leader>d", "<Plug>(doge-generate)")
 		end,
 	},
 }, opts)
