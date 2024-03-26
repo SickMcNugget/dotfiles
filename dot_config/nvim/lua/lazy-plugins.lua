@@ -293,4 +293,12 @@ lazy.setup({
 			vim.keymap.set("n", "<Leader>d", "<Plug>(doge-generate)")
 		end,
 	},
+	{
+		"lambdalisue/suda.vim",
+		lazy = false,
+		-- event = "VeryLazy",
+		init = function()
+			vim.g["suda_smart_edit"] = 1
+		end
+	},
 }, opts)
