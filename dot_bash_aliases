@@ -3,5 +3,6 @@ alias explorer="explorer.exe"
 alias vim="nvim"
 alias mkctl="microk8s kubectl"
 alias fd="fdfind"
-alias randman='man $(apropos -w "*" | shuf | head -1 | cut -f1 -d " ")'
 alias kc="kubectl"
+alias randman='man $(apropos -w "*" | shuf | head -1 | cut -f1 -d " ")'
+alias randapt='apt info $(apt list 2>/dev/null | grep -o "^[^/]*" | shuf | head -1)'
