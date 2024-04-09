@@ -18,4 +18,10 @@
 	name = {{ $name | quote }}
 	work = {{ $work }}
 [edit]
-    command = "/usr/local/bin/nvim"
+    command = "nvim"
+[diff]
+    command = "nvim"
+    args = ["-d", '{{ "{{" }} .Destination {{ "}}" }}', '{{ "{{" }} .Target {{ "}}" }}']
+[merge]
+    command = "nvim"
+    args = ["-d", '{{ "{{" }} .Destination {{ "}}" }}', '{{ "{{" }} .Source {{ "}}" }}', '{{ "{{" }} .Target {{ "}}" }}']
