@@ -301,4 +301,11 @@ lazy.setup({
 			vim.g["suda_smart_edit"] = 1
 		end
 	},
+	{
+		'windwp/nvim-autopairs',
+		event = "InsertEnter",
+		config = true
+		-- use opts = {} for passing setup options
+		-- this is equalent to setup({}) function
+	}
 }, opts)
