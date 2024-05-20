@@ -7,18 +7,26 @@ return {
 	event = { "InsertEnter" },
 	dependencies = {
 		-- Snippet engine
-		"L3MON4D3/LuaSnip",
+		{
+			"L3MON4D3/LuaSnip",
+			version = "v2.*",
+			build = "make install_jsregexp",
+			dependencies = {
+				"rafamadriz/friendly-snippets",
+			}
+		},
+
 		"saadparwaiz1/cmp_luasnip",
 
 		-- LSP autocomplete
 		"hrsh7th/cmp-nvim-lsp",
 		"hrsh7th/cmp-path",
-		"rafamadriz/friendly-snippets",
 	},
 	config = function()
 		local cmp = require("cmp")
 		local luasnip = require("luasnip")
 
+		require("luasnip.loaders.from_vscode").lazy_load({ paths = "~/.config/nvim/lua/snippets" })
 		require("luasnip.loaders.from_vscode").lazy_load()
 
 		cmp.setup({
@@ -38,7 +46,15 @@ return {
 					behavior = cmp.ConfirmBehavior.Replace,
 					select = false,
 				}),
+				["<Tab>"] = cmp.mapping(function(fallback)
+					if luasnip.locally_jumpable(1) then
+						luasnip.jump(1)
+					else
+						fallback()
+					end
+				end, { "i" }),
 			}),
+
 			sources = {
 				{ name = "nvim_lsp" },
 				{ name = "luasnip" },
