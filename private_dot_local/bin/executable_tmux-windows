@@ -1,0 +1,37 @@
+#!/bin/bash
+
+if ! [[ -f .tmuxw ]]; then
+    echo "Please create a .tmuxw file"
+    exit 1
+fi
+
+session=$(tmux display-message -p "#S" 2>/dev/null)
+
+if [[ -z $TMUX ]] && [[ -z $session ]]; then
+    tmux new-session -c . -d
+    session=$(tmux display-message -p "#S" 2>/dev/null)
+fi
+
+windows=($(cat .tmuxw))
+
+for window in "${windows[@]}"; do
+    winname=$(echo ${window} | cut -d "=" -f 1)
+    winfolder=$(echo ${window} | cut -d "=" -f 2)
+
+    if [[ "$winname" == "[none]" ]]; then
+        tmux neww -d
+    elif [[ "$winname" == "$winfolder" ]]; then
+        tmux neww -d -n "$winname"
+    elif ! [[ -d "$winfolder" ]]; then
+        echo "Directory $winfolder does not exist for window $winname"
+        tmux kill-session -t "$session"
+        exit 1
+    else
+        tmux neww -c "$winfolder" -d -n "$winname"
+    fi
+done
+
+# tmux creates a default window at index 1
+tmux kill-window -t 1
+tmux select-window -t 1
+tmux a
