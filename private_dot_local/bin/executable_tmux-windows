@@ -9,8 +9,9 @@ function ensure_dir_exists {
 }
 
 function ensure_cmd_exists {
-    if ! command -v "$1" >/dev/null 2>&1; then
-        echo "Command $1 does not exist for window $2"
+    cmdarray=($1)
+    if ! command -v "${cmdarray[0]}" >/dev/null 2>&1; then
+        echo "Command ${cmdarray[0]} does not exist for window $2"
         tmux kill-session -t "$3"
         exit 1
     fi
@@ -29,43 +30,31 @@ if [[ -z $TMUX ]] && [[ -z $session ]]; then
     session=$(tmux display-message -p "#S" 2>/dev/null)
 fi
 
-windows=($(cat .tmuxw))
-
-for window in "${windows[@]}"; do
-    winname=$(echo ${window} | cut -d "," -f 1)
-    winfolder=$(echo ${window} | cut -d "," -f 2)
-    winexec=$(echo ${window} | cut -d "," -f 3)
-    echo "$winname $winfolder $winexec"
-
-    # layouts:
-    # [none]
-    # <name>
-    # <name>,<directory>
-    # <name>,<directory>,<command>
-    # <name>,.,<command>
-    # Create a standard window if the name is [none]
-    # Create a named window if the 
-    #
+while IFS=, read -r winname winfolder winexec; do
+    cmd=""
     if [[ "$winname" == "[none]" ]]; then
-        tmux neww
-    elif [[ "$winname" == "$winfolder" && "$winname" == "$winexec" ]]; then
-        tmux neww -n "$winname"
-    elif [[ "$winname" != "$winfolder" && -z "$winexec" ]]; then
-        ensure_dir_exists "$winfolder" "$winname" "$session"
-        tmux neww  -c "$winfolder" -n "$winname"
-    elif [[ "$winname" != "$winfolder" && ! -z "$winexec" ]]; then
-        ensure_dir_exists "$winfolder" "$winname" "$session"
-        ensure_cmd_exists "$winexec" "$winname" "$session"
+        cmd="tmux neww"
+    else
+        cmd="tmux neww -n ${winname}"
+    fi
 
-        if [[ "$winfolder" == "." ]]; then
-            tmux neww -n "$winname"
-        else
-            tmux neww -c "$winfolder" -n "$winname"
+    if [[ ! -z "$winfolder" ]]; then
+        ensure_dir_exists "$winfolder" "$winname" "$session"
+
+        if [[ "$winfolder" != "." ]]; then
+            cmd="${cmd} -c ${winfolder}"
         fi
+    fi
 
+    eval "$cmd"
+
+    if [[ ! -z "$winexec" ]]; then
+        ensure_cmd_exists "$winexec" "$winname" "$session"
         tmux send-keys "$winexec" C-m
     fi
-done
+    echo "$winname $winfolder $winexec"
+
+done < .tmuxw
 
 # tmux creates a default window at index 1
 tmux kill-window -t 1
