@@ -20,6 +20,9 @@ function ensure_cmd_exists {
 
 if ! [[ -f .tmuxw ]]; then
     echo "Please create a .tmuxw file"
+    echo "Format:"
+    echo -e '\t("[none]" | <name>)[,("."|<directory>)[,<command>]]'
+    echo -e 'e.g.\t[none],.,vim .'
     exit 1
 fi
 
