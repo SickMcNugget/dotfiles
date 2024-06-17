@@ -151,3 +151,6 @@ fi
 if [ -d "$HOME/.local/bin" ]; then
     export PATH="$HOME/.local/bin:$PATH"
 fi
+
+export EDITOR="nvim"
+export SYSTEMD_EDITOR="nvim"
