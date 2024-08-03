@@ -234,7 +234,6 @@ lazy.setup({
 				require("plugins.mason-nvim-dap"),
 			},
 		},
-		opts = {},
 	},
 	{
 		"stevearc/conform.nvim",
