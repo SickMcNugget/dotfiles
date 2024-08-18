@@ -6,3 +6,4 @@ alias fd="fdfind"
 alias kc="kubectl"
 alias randman='man $(apropos -w "*" | shuf | head -1 | cut -f1 -d " ")'
 alias randapt='apt info $(apt list 2>/dev/null | grep -o "^[^/]*" | shuf | head -1)'
+alias blogdate="date '+%F %T %:z'"
