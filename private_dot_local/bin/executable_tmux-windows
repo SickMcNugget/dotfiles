@@ -60,6 +60,6 @@ while IFS=, read -r winname winfolder winexec; do
 done < .tmuxw
 
 # tmux creates a default window at index 1
-tmux kill-window -t 1
-tmux select-window -t 1
+tmux kill-window -t 0
+tmux select-window -t 0
 tmux a
