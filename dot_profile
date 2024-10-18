@@ -26,10 +26,34 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-if [ -d "/usr/local/texlive/2022/bin/x86_64-linux" ] ; then
-    PATH="/usr/local/texlive/2022/bin/x86_64-linux:$PATH"
+TEXLIVE_YEAR=2024
+if [ -d "/usr/local/texlive" ]; then
+    export MANPATH="/usr/local/texlive/${TEXLIVE_YEAR}/texmf-dist/doc/man${MANPATH:+:${MANPATH}}"
+    export INFOPATH="/usr/local/texlive/${TEXLIVE_YEAR}/texmf-dist/doc/info${INFOPATH:+:${INFOPATH}}"
+    export PATH="/usr/local/texlive/${TEXLIVE_YEAR}/bin/x86_64-linux${PATH:+:${PATH}}"
 fi
 
-# set 
+# Ruby: rbenv
+if [ -d "$HOME/.rbenv" ]; then
+    eval "$(~/.rbenv/bin/rbenv init - bash)"
+fi
 
+# Python: pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+if [ -d "$PYENV_ROOT/bin" ]; then
+    export PATH="$PYENV_ROOT/bin:$PATH"
+fi
+eval "$(pyenv init -)"
 
+# Rust: Cargo
+[ -d "$HOME/.cargo" ] && . "$HOME/.cargo/env"
+
+# Golang: local modules
+if [ -d "/usr/local/go/bin" ]; then
+    export PATH="$PATH:/usr/local/go/bin:${HOME}/go/bin"
+fi
+
+# rke2
+if [ -d "/var/lib/rancher/rke2/bin" ]; then
+    export PATH="$PATH:/var/lib/rancher/rke2/bin"
+fi

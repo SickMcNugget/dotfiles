@@ -118,39 +118,13 @@ fi
 
 # So tensorflow can find cuda libraries
 export LD_LIBRARY_PATH=/usr/lib/wsl/lib
-export JAVA_HOME="/usr/lib/jvm/java-1.11.0-openjdk-amd64"
-export PATH="$JAVA_HOME/bin:${PATH:+${PATH}}"
+# export JAVA_HOME="/usr/lib/jvm/java-1.11.0-openjdk-amd64"
+# export PATH="$JAVA_HOME/bin:${PATH:+${PATH}}"
 
+export EDITOR="nvim"
+export SYSTEMD_EDITOR="nvim"
 
 # Set default MANPATH
 if [ -z "$MANPATH" ]; then
     export MANPATH="/usr/local/man:/usr/local/share/man:/usr/share/man:"
 fi
-
-# Latex setup
-if [ -d "/usr/local/texlive" ]; then
-    export MANPATH="/usr/local/texlive/2023/texmf-dist/doc/man${MANPATH:+:${MANPATH}}"
-    export INFOPATH="/usr/local/texlive/2023/texmf-dist/doc/info${INFOPATH:+:${INFOPATH}}"
-    export PATH="/usr/local/texlive/2023/bin/x86_64-linux${PATH:+:${PATH}}"
-fi
-
-if [ -d "/usr/local/go/bin" ]; then
-    export PATH="$PATH:/usr/local/go/bin"
-fi
-
-if [ -d "$HOME/.rbenv/" ]; then
-    eval "$(~/.rbenv/bin/rbenv init - bash)"
-fi
-
-# Mojo
-if [ -d "$HOME/.modular" ]; then
-    export MODULAR_HOME="$HOME/.modular"
-    export PATH="$MODULAR_HOME/pkg/packages.modular.com_mojo/bin:$PATH"
-fi
-
-if [ -d "$HOME/.local/bin" ]; then
-    export PATH="$HOME/.local/bin:$PATH"
-fi
-
-export EDITOR="nvim"
-export SYSTEMD_EDITOR="nvim"

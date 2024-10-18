@@ -12,7 +12,7 @@
     pacman -S tmux ripgrep base-devel ninja cmake unzip curl fd
 {{ end -}}
 
-# Installing tpm and neovim from source
+# tmux: tpm
 if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
     export TMUX_PLUGIN_MANAGER_PATH="$HOME/.tmux/plugins/"
     git clone "https://github.com/tmux-plugins/tpm" "$HOME/.tmux/plugins/tpm" && "$HOME/.tmux/plugins/tpm/bin/install_plugins"
@@ -20,6 +20,7 @@ else
     echo "tmux: tpm already installed"
 fi
 
+# neovim
 if [ -f /usr/local/bin/nvim ] || [ -f /usr/bin/nvim ] || [ -d "$HOME/neovim" ]; then
     echo "Neovim: Already installed"
 else
@@ -29,6 +30,7 @@ else
     sudo make install
 fi
 
+# fonts
 if [ -f "$HOME/.local/share/fonts/FiraMonoNerdFontMono-Regular.otf" ]; then
     echo "NerdFonts: FiraMono already installed"
 else
@@ -41,4 +43,21 @@ else
     rm "FiraMono.tar.xz"
     cd - >/dev/null
 fi
+
+# Installing rustup
+if [ -d "$HOME/.cargo" ]; then
+    echo "Rust: cargo already installed"
+else
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+fi
+
+if [ -d "$HOME/.pyenv" ]; then
+    echo "Python: pyenv already installed"
+else
+    curl https://pyenv.run | bash
+fi
+
 {{ end -}}
+
+
+

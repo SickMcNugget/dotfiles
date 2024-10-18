@@ -1,3 +1,4 @@
+# Hilariously, this makes aliases work with sudo
 alias sudo="sudo "
 alias explorer="explorer.exe"
 alias vim="nvim"
