@@ -64,7 +64,7 @@ fi
 
 # == Javascript ==
 # nvm
-if [ -d "$HOME/.nvm" ]; then
+if [ -d "$HOME/.config/nvm" ]; then
     echo "JavaScript: nvm already installed"
 else
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | PROFILE="$HOME/.profile" bash
