@@ -128,3 +128,5 @@ export SYSTEMD_EDITOR="nvim"
 if [ -z "$MANPATH" ]; then
     export MANPATH="/usr/local/man:/usr/local/share/man:/usr/share/man:"
 fi
+
+export XDG_CONFIG_HOME="$HOME/.config"
