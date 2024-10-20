@@ -3,7 +3,7 @@
 
 # Distro-specific package installs (ubuntu and debian separated for potential deviation)
 {{ if eq .chezmoi.osRelease.id "ubuntu" "debian" -}}
-    sudo apt update && sudo apt install tmux ripgrep ninja-build gettext cmake unzip curl fd-find zathura python3.11-venv
+    sudo apt update && sudo apt install tmux ripgrep ninja-build gettext cmake unzip curl fd-find zathura python3.11-venv build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev curl git libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev 
     {{ if eq .chezmoi.osRelease.id "ubuntu" -}}
     {{ else if eq .chezmoi.osRelease.id "debian" -}}
         sudo apt install command-not-found && sudo update-command-not-found && sudo apt update
@@ -15,7 +15,7 @@
 # tmux: tpm
 if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
     export TMUX_PLUGIN_MANAGER_PATH="$HOME/.tmux/plugins/"
-    git clone "https://github.com/tmux-plugins/tpm" "$HOME/.tmux/plugins/tpm" && "$HOME/.tmux/plugins/tpm/bin/install_plugins"
+    git clone "https://github.com/tmux-plugins/tpm" "$HOME/.tmux/plugins/tpm"
 else
     echo "tmux: tpm already installed"
 fi
