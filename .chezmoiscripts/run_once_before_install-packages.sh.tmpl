@@ -12,7 +12,8 @@
     pacman -S tmux ripgrep base-devel ninja cmake unzip curl fd
 {{ end -}}
 
-# tmux: tpm
+# == tmux ==
+# tpm
 if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
     export TMUX_PLUGIN_MANAGER_PATH="$HOME/.tmux/plugins/"
     git clone "https://github.com/tmux-plugins/tpm" "$HOME/.tmux/plugins/tpm"
@@ -20,9 +21,10 @@ else
     echo "tmux: tpm already installed"
 fi
 
-# neovim
+# == Neovim ==
+# editor
 if [ -f /usr/local/bin/nvim ] || [ -f /usr/bin/nvim ] || [ -d "$HOME/neovim" ]; then
-    echo "Neovim: Already installed"
+    echo "Neovim: editor already installed"
 else
     git clone https://github.com/neovim/neovim.git "$HOME/neovim"
     cd "$HOME/neovim"
@@ -32,7 +34,7 @@ fi
 
 # fonts
 if [ -f "$HOME/.local/share/fonts/FiraMonoNerdFontMono-Regular.otf" ]; then
-    echo "NerdFonts: FiraMono already installed"
+    echo "Neovim: FiraMono already installed"
 else
     if  [ ! -d "$HOME/.local/share/fonts" ]; then
         mkdir -p "$HOME/.local/share/fonts"
@@ -44,17 +46,28 @@ else
     cd - >/dev/null
 fi
 
-# Installing rustup
+# == Rust ==
+# Cargo
 if [ -d "$HOME/.cargo" ]; then
     echo "Rust: cargo already installed"
 else
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 fi
 
+# == Python ==
+# Pyenv
 if [ -d "$HOME/.pyenv" ]; then
     echo "Python: pyenv already installed"
 else
     curl https://pyenv.run | bash
+fi
+
+# == Javascript ==
+# nvm
+if [ -d "$HOME/.nvm" ]; then
+    echo "JavaScript: nvm already installed"
+else
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | PROFILE="$HOME/.profile" bash
 fi
 
 {{ end -}}
