@@ -26,7 +26,7 @@ fi
 if [ -f /usr/local/bin/nvim ] || [ -f /usr/bin/nvim ] || [ -d "$HOME/neovim" ]; then
     echo "Neovim: editor already installed"
 else
-    git clone https://github.com/neovim/neovim.git "$HOME/neovim"
+    git clone --depth=1 https://github.com/neovim/neovim.git "$HOME/neovim" 
     cd "$HOME/neovim"
     make CMAKE_BUILD_TYPE=Release
     sudo make install
