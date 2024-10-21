@@ -9,7 +9,9 @@
 	rebase = false
 [merge]
 	tool = nvimdiff
+{{- if .work }}
 [url "git@gitlab.base"]
 	insteadOf = https://gitlab.base
 [url "git@gitlab.base:"]
 	insteadOf = https://gitlab.base/
+{{- end }}
