@@ -2,9 +2,9 @@
 #!/usr/bin/env sh
 
 # Distro-specific package installs (ubuntu and debian separated for potential deviation)
-{{ if eq .chezmoi.osRelease.id "ubuntu" "debian" -}}
+{{ if eq .chezmoi.osRelease.id "ubuntu" "debian" "neon" -}}
     sudo apt update && sudo apt install tmux ripgrep ninja-build gettext cmake unzip curl fd-find zathura python3.11-venv build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev curl git libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev 
-    {{ if eq .chezmoi.osRelease.id "ubuntu" -}}
+    {{ if eq .chezmoi.osRelease.id "ubuntu" "neon" -}}
     {{ else if eq .chezmoi.osRelease.id "debian" -}}
         sudo apt install command-not-found && sudo update-command-not-found && sudo apt update
     {{ end -}}
@@ -28,7 +28,7 @@ if [ -f /usr/local/bin/nvim ] || [ -f /usr/bin/nvim ] || [ -d "$HOME/neovim" ]; 
 else
     git clone --depth=1 https://github.com/neovim/neovim.git "$HOME/neovim" 
     cd "$HOME/neovim"
-    make CMAKE_BUILD_TYPE=Release
+    make CMAKE_BUILD_TYPE=Release -j$(nproc)
     sudo make install
 fi
 
