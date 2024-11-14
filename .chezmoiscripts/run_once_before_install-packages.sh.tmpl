@@ -70,6 +70,13 @@ else
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | PROFILE="$HOME/.profile" bash
 fi
 
+# deno
+if [ -d "$HOME/.deno" ]; then
+    echo "JavaScript: deno already installed"
+else
+    curl -fsSL https://deno.land/install.sh | sh -s -- -y --no-modify-path
+fi
+
 # == Golang ==
 # go
 if [ -d "/usr/local/go" ]; then
@@ -80,6 +87,3 @@ else
     rm "$HOME/go1.23.2.linux-amd64.tar.gz"
 fi
 {{ end -}}
-
-
-
