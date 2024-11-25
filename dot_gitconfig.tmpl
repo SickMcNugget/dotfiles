@@ -8,10 +8,12 @@
 [pull]
 	rebase = false
 [merge]
-	tool = nvimdiff
+	tool = meld
 {{- if .work }}
 [url "git@gitlab.base"]
 	insteadOf = https://gitlab.base
 [url "git@gitlab.base:"]
 	insteadOf = https://gitlab.base/
 {{- end }}
+[color]
+	ui = auto

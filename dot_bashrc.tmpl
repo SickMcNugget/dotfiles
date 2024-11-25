@@ -116,6 +116,11 @@ if ! shopt -oq posix; then
   fi
 fi
 
+# Function definitions
+if [ -f ~/.bash_functions ]; then
+    . ~/.bash_functions
+fi
+
 
 {{ if eq .chezmoi.os "linux" }}
 {{  if (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}

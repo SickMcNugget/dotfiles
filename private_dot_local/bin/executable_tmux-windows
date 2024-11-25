@@ -3,14 +3,15 @@
 function usage() {
     echo "Usage: $0"
     echo "Create a tmux session with specific windows from a .tmuxw template file"
-    printf "\n\n"
+    echo
     echo "The .tmuxw file is comma-separated, with a separate window on each line of the file."
-    printf "\nFields"
+    echo "Fields"
     printf "  %-26s %s\n" "1" "The name of the window"
     printf "  %-26s %s\n" "2" "An optional directory to start the window in"
     printf "  %-26s %s\n" "3" "An optional command to run in the window"
     printf "\nExamples\n"
-    printf "\nA .tmuxw file that creates an editor window in the current directory and runs the 'foo' program in the 'bin' directory\n"
+    printf " 1. Create a window named 'editor' running 'vim' in $(pwd)\n"
+    printf " 2. Create an unnamed window running 'foo' in '$(pwd)/bin'\n"
     printf "editor,.,vim .\n"
     printf "[none],bin,./foo\n"
     exit 1
