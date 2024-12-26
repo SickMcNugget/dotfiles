@@ -110,16 +110,16 @@ lazy.setup({
 	{
 		"mbbill/undotree",
 		keys = {
-			{ "<leader>u", "<cmd>UndotreeToggle<cr>", desc = "UndoTree Toggle" },
+			{ "<leader>u", "<cmd>undotreetoggle<cr>", desc = "undotree toggle" },
 		},
 		config = function()
-			vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
+			vim.keymap.set("n", "<leader>u", vim.cmd.undotreetoggle)
 		end,
 		opts = {},
 	},
 	{
 		"lewis6991/gitsigns.nvim",
-		event = { "BufReadPost", "BufNewFile" },
+		event = { "bufreadpost", "bufnewfile" },
 		opts = require("plugins.opts.gitsigns"),
 	},
 	{
@@ -130,7 +130,7 @@ lazy.setup({
 	},
 	{
 		"folke/which-key.nvim",
-		event = "VeryLazy",
+		event = "verylazy",
 		init = function()
 			vim.o.timeout = true
 			vim.o.timeoutlen = 300
@@ -150,19 +150,19 @@ lazy.setup({
 	},
 	{
 		"kylechui/nvim-surround",
-		version = "*", -- Use for stability; omit to use `main` branch for the latest features
-		event = "VeryLazy",
+		version = "*", -- use for stability; omit to use `main` branch for the latest features
+		event = "verylazy",
 		opts = {},
 		-- config = function()
 		-- 	require("nvim-surround").setup({
-		-- 		-- Configuration here, or leave empty to use defaults
+		-- 		-- configuration here, or leave empty to use defaults
 		-- 	})
 		-- end,
 	},
 	{
 		"lukas-reineke/indent-blankline.nvim",
 		main = "ibl",
-		event = { "UIEnter" },
+		event = { "uienter" },
 		opts = {
 			indent = { char = "┊" },
 			scope = { exclude = { language = { "python" } } },
@@ -170,7 +170,7 @@ lazy.setup({
 	},
 	{
 		"neovim/nvim-lspconfig",
-		event = { "BufReadPost", "BufNewFile" },
+		event = { "bufreadpost", "bufnewfile" },
 		dependencies = {
 			{
 				require("plugins.neodev"),
@@ -187,48 +187,48 @@ lazy.setup({
 	{
 		"mfussenegger/nvim-dap",
 		keys = {
-			-- 	Add arguments later by following this link: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/plugins/extras/dap/core.lua
+			-- 	add arguments later by following this link: https://github.com/lazyvim/lazyvim/blob/main/lua/lazyvim/plugins/extras/dap/core.lua
 			{
-				"<F5>",
+				"<f5>",
 				function()
 					require("dap").continue()
 				end,
-				desc = "Debug: Start/Continue",
+				desc = "debug: start/continue",
 			},
 			{
-				"<F1>",
+				"<f1>",
 				function()
 					require("dap").step_into()
 				end,
-				desc = "Debug: Step Into",
+				desc = "debug: step into",
 			},
 			{
-				"<F2>",
+				"<f2>",
 				function()
 					require("dap").step_over()
 				end,
-				desc = "Debug: Step Over",
+				desc = "debug: step over",
 			},
 			{
-				"<F3>",
+				"<f3>",
 				function()
 					require("dap").step_out()
 				end,
-				desc = "Debug: Step Out",
+				desc = "debug: step out",
 			},
 			{
 				"<leader>b",
 				function()
 					require("dap").toggle_breakpoint()
 				end,
-				desc = "Debug: Toggle Breakpoint",
+				desc = "debug: toggle breakpoint",
 			},
 			{
-				"<leader>B",
+				"<leader>b",
 				function()
-					require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))
+					require("dap").set_breakpoint(vim.fn.input("breakpoint condition: "))
 				end,
-				desc = "Debug: Set Breakpoint",
+				desc = "debug: set breakpoint",
 			},
 		},
 		dependencies = {
@@ -242,7 +242,7 @@ lazy.setup({
 	},
 	{
 		"stevearc/conform.nvim",
-		event = "VeryLazy",
+		event = "verylazy",
 		opts = {
 			format_on_save = {
 				timeout_ms = 500,
@@ -256,25 +256,14 @@ lazy.setup({
 	},
 	{
 		"iamcco/markdown-preview.nvim",
-		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-		build = function()
-			vim.fn["mkdp#util#install"]()
-		end,
-		-- init function below provided by a lovely GitHub user @anuramat
-		-- https://github.com/iamcco/markdown-preview.nvim/issues/585#issuecomment-1724859362
+		cmd = { "markdownpreviewtoggle", "markdownpreview", "markdownpreviewstop" },
+		build = "cd app && npm install && git restore .",
+		-- or if you use yarn: (i have not checked this, i use npm)
+		-- build = "cd app && yarn install && git restore .",
 		init = function()
-			local function load_then_exec(cmd)
-				return function()
-					vim.cmd.delcommand(cmd)
-					require("lazy").load({ plugins = { "markdown-preview.nvim" } })
-					vim.api.nvim_exec_autocmds("BufEnter", {}) -- commands appear only after BufEnter
-					vim.cmd(cmd)
-				end
-			end
-			for _, cmd in pairs({ "MarkdownPreview", "MarkdownPreviewStop", "MarkdownPreviewToggle" }) do
-				vim.api.nvim_create_user_command(cmd, load_then_exec(cmd), {})
-			end
+			vim.g.mkdp_filetypes = { "markdown" }
 		end,
+		ft = { "markdown" },
 	},
 	{
 		"lervag/vimtex",
