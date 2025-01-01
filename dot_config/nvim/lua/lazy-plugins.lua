@@ -94,6 +94,11 @@ lazy.setup({
 			{ "gb", mode = "x" },
 		},
 		opts = require("plugins.opts.Comment"),
+		config = function()
+			require("Comment").setup()
+			local ft = require("Comment.ft")
+			ft.slint = { "//%s", "/*%s*/" }
+		end,
 	},
 	{
 		"alker0/chezmoi.vim",
