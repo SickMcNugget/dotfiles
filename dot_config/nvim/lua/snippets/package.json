@@ -7,6 +7,12 @@
                     "go"
                 ],
                 "path": "./go.json"
+            },
+            {
+                "language": [
+                    "sh"
+                ],
+                "path": "./sh.json"
             }
         ]
     }

@@ -1,0 +1,19 @@
+{
+    "current script directory": {
+        "prefix": "here",
+        "body": "SCRIPT_DIR=$( cd -- \"$( dirname -- \"${BASH_SOURCE[0]}\" )\" &> /dev/null && pwd )",
+        "description": "Snippet for getting the current directory of a bash script"
+    },
+    "bash boilerplate": {
+        "prefix": "boiler",
+        "body": [
+            "#!/bin/bash",
+            "# Written by Joren (SickMcNugget)",
+            "# Date: ${CURRENT_YEAR}-${CURRENT_MONTH}-${CURRENT_DATE}",
+            "#",
+            "# $1",
+            "set -euo pipefail",
+            "SCRIPT_DIR=$( cd -- \"$( dirname -- \"${BASH_SOURCE[0]}\" )\" &> /dev/null && pwd )\n"
+        ]
+    }
+}
