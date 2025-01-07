@@ -130,7 +130,7 @@ lazy.setup({
 	},
 	{
 		"folke/which-key.nvim",
-		event = "verylazy",
+		event = "VeryLazy",
 		init = function()
 			vim.o.timeout = true
 			vim.o.timeoutlen = 300
@@ -151,7 +151,7 @@ lazy.setup({
 	{
 		"kylechui/nvim-surround",
 		version = "*", -- use for stability; omit to use `main` branch for the latest features
-		event = "verylazy",
+		event = "VeryLazy",
 		opts = {},
 		-- config = function()
 		-- 	require("nvim-surround").setup({
@@ -242,7 +242,7 @@ lazy.setup({
 	},
 	{
 		"stevearc/conform.nvim",
-		event = "verylazy",
+		event = "VeryLazy",
 		opts = {
 			format_on_save = {
 				timeout_ms = 500,
@@ -256,7 +256,7 @@ lazy.setup({
 	},
 	{
 		"iamcco/markdown-preview.nvim",
-		cmd = { "markdownpreviewtoggle", "markdownpreview", "markdownpreviewstop" },
+		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
 		build = "cd app && npm install && git restore .",
 		-- or if you use yarn: (i have not checked this, i use npm)
 		-- build = "cd app && yarn install && git restore .",
