@@ -76,6 +76,7 @@ if [ -d "$HOME/.rbenv" ]; then
     echo "Ruby: rbenv already installed"
 else
     git clone https://github.com/rbenv/rbenv.git "$HOME/.rbenv"
+    git clone https://github.com/rbenv/ruby-build.git "$(rbenv root)"/plugins/ruby-build
 fi
 
 # deno
