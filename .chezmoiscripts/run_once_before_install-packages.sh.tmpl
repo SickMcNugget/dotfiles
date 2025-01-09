@@ -3,7 +3,7 @@
 
 # Distro-specific package installs (ubuntu and debian separated for potential deviation)
 {{ if eq .chezmoi.osRelease.id "ubuntu" "debian" "neon" -}}
-    sudo apt update && sudo apt install tmux ripgrep ninja-build gettext cmake unzip curl fd-find zathura python3-venv build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev curl git libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev 
+    sudo apt update && sudo apt install tmux ripgrep ninja-build gettext cmake unzip curl fd-find zathura python3-venv build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev curl git libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev autoconf patch libyaml-dev libreadline6-dev libgmp-dev libncurses5-dev libgdbm-dev libdb-dev uuid-dev
     {{ if eq .chezmoi.osRelease.id "ubuntu" "neon" -}}
     {{ else if eq .chezmoi.osRelease.id "debian" -}}
         sudo apt install command-not-found && sudo update-command-not-found && sudo apt update
