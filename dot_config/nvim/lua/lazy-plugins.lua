@@ -67,10 +67,10 @@ if not status_ok then
 end
 
 lazy.setup({
-	{
-		"tpope/vim-fugitive",
-		event = "VeryLazy",
-	},
+	-- {
+	-- 	"tpope/vim-fugitive",
+	-- 	event = "VeryLazy",
+	-- },
 	{
 		"tpope/vim-sleuth",
 		event = { "BufReadPost", "BufNewFile", "BufFilePost" },
@@ -107,16 +107,16 @@ lazy.setup({
 			vim.g["chezmoi#use_tmp_buffer"] = true
 		end,
 	},
-	{
-		"mbbill/undotree",
-		keys = {
-			{ "<leader>u", "<cmd>undotreetoggle<cr>", desc = "undotree toggle" },
-		},
-		config = function()
-			vim.keymap.set("n", "<leader>u", vim.cmd.undotreetoggle)
-		end,
-		opts = {},
-	},
+	-- {
+	-- 	"mbbill/undotree",
+	-- 	keys = {
+	-- 		{ "<leader>u", "<cmd>undotreetoggle<cr>", desc = "undotree toggle" },
+	-- 	},
+	-- 	config = function()
+	-- 		vim.keymap.set("n", "<leader>u", vim.cmd.undotreetoggle)
+	-- 	end,
+	-- 	opts = {},
+	-- },
 	{
 		"lewis6991/gitsigns.nvim",
 		event = { "bufreadpost", "bufnewfile" },
@@ -188,47 +188,34 @@ lazy.setup({
 		"mfussenegger/nvim-dap",
 		keys = {
 			-- 	add arguments later by following this link: https://github.com/lazyvim/lazyvim/blob/main/lua/lazyvim/plugins/extras/dap/core.lua
+			{ "<leader>dc", function() require("dap").continue() end,  desc = "Debug: Start/Continue", },
+			{ "<leader>dt", function() require("dap").terminate() end, desc = "Debug: Terminate", },
 			{
-				"<f5>",
+				"<leader>dp",
 				function()
-					require("dap").continue()
+					local dap = require("dap")
+					dap.listeners.on_config["add_args"] = function(config)
+						local copy = vim.deepcopy(config)
+						local args = vim.fn.input("Args: ")
+						if vim.fn.empty(args) then return config end
+
+						copy.args = require("dap.utils").splitstr(args)
+						return copy
+					end
+					dap.continue()
+					dap.listeners.on_config["add_args"] = nil
 				end,
-				desc = "debug: start/continue",
+				desc = "Debug: Start With Parameters"
 			},
+			{ "<leader>di", function() require("dap").step_into() end,         desc = "Debug: Step Into", },
+			{ "<leader>dn", function() require("dap").step_over() end,         desc = "Debug: Step Over", },
+			{ "<leader>do", function() require("dap").step_out() end,          desc = "Debug: Step Out", },
+			-- { "<leader>dh", function() require("dap.ui.widgets").preview() end, desc = "Debug: preview",           mode = { 'n', 'v' } },
+			{ "<leader>b",  function() require("dap").toggle_breakpoint() end, desc = "Debug: Toggle Breakpoint", },
 			{
-				"<f1>",
-				function()
-					require("dap").step_into()
-				end,
-				desc = "debug: step into",
-			},
-			{
-				"<f2>",
-				function()
-					require("dap").step_over()
-				end,
-				desc = "debug: step over",
-			},
-			{
-				"<f3>",
-				function()
-					require("dap").step_out()
-				end,
-				desc = "debug: step out",
-			},
-			{
-				"<leader>b",
-				function()
-					require("dap").toggle_breakpoint()
-				end,
-				desc = "debug: toggle breakpoint",
-			},
-			{
-				"<leader>b",
-				function()
-					require("dap").set_breakpoint(vim.fn.input("breakpoint condition: "))
-				end,
-				desc = "debug: set breakpoint",
+				"<leader>B",
+				function() require("dap").set_breakpoint(vim.fn.input("BP condition: ")) end,
+				desc = "Debug: Set Breakpoint",
 			},
 		},
 		dependencies = {
@@ -264,14 +251,6 @@ lazy.setup({
 			vim.g.mkdp_filetypes = { "markdown" }
 		end,
 		ft = { "markdown" },
-	},
-	{
-		"lervag/vimtex",
-		lazy = false,
-		init = function()
-			vim.g.vimtex_view_method = "zathura"
-			vim.g.vimtex_compiler_method = "latexmk"
-		end,
 	},
 	{
 		"kkoomen/vim-doge",

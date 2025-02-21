@@ -21,8 +21,8 @@ local function lsp_keymaps(bufnr)
 	keymap("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
 	keymap("gI", vim.lsp.buf.implementation, "[G]oto [I]mplementation")
 	keymap("<leader>D", vim.lsp.buf.type_definition, "Type [D]efinition")
-	keymap("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
-	keymap("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
+	-- keymap("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
+	-- keymap("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
 
 	-- See `:help K` for why this keymap
 	keymap("K", vim.lsp.buf.hover, "Hover Documentation")
