@@ -197,7 +197,7 @@ lazy.setup({
 					dap.listeners.on_config["add_args"] = function(config)
 						local copy = vim.deepcopy(config)
 						local args = vim.fn.input("Args: ")
-						if vim.fn.empty(args) then return config end
+						if vim.fn.empty(args) == 1 then return config end
 
 						copy.args = require("dap.utils").splitstr(args)
 						return copy
