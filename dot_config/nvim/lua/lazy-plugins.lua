@@ -231,15 +231,32 @@ lazy.setup({
 		"stevearc/conform.nvim",
 		event = "VeryLazy",
 		opts = {
-			format_on_save = {
-				timeout_ms = 500,
-				lsp_fallback = true,
-			},
+			format_on_save = function(bufnr)
+				if vim.g.disable_autoformat then
+					return
+				end
+				return {
+					timeout_ms = 500,
+					lsp_format = "fallback",
+				}
+			end,
 			formatters_by_ft = {
 				-- lua = { "stylua" },
 				-- python = { "black" },
 			},
 		},
+		config = function()
+			vim.api.nvim_create_user_command("FormatDisable", function(args)
+				vim.g.disable_autoformat = true
+			end, {
+				desc = "Disable autoformat-on-save"
+			})
+			vim.api.nvim_create_user_command("FormatEnable", function(args)
+				vim.g.disable_autoformat = false
+			end, {
+				desc = "Enable autoformat-on-save"
+			})
+		end
 	},
 	{
 		"iamcco/markdown-preview.nvim",
