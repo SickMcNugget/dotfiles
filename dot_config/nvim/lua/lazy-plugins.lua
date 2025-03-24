@@ -241,11 +241,13 @@ lazy.setup({
 				}
 			end,
 			formatters_by_ft = {
-				-- lua = { "stylua" },
-				-- python = { "black" },
+				lua = { "stylua" },
+				python = { "black" },
 			},
 		},
-		config = function()
+		config = function(_, params)
+			require('conform').setup(params)
+
 			vim.api.nvim_create_user_command("FormatDisable", function(args)
 				vim.g.disable_autoformat = true
 			end, {
