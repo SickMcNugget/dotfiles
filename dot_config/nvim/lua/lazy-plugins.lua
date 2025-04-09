@@ -245,8 +245,8 @@ lazy.setup({
 				python = { "black" },
 			},
 		},
-		config = function(_, params)
-			require('conform').setup(params)
+		config = function(_, opts)
+			require('conform').setup(opts)
 
 			vim.api.nvim_create_user_command("FormatDisable", function(args)
 				vim.g.disable_autoformat = true

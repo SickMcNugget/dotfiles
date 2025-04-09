@@ -10,4 +10,6 @@ alias randapt='apt info $(apt list 2>/dev/null | grep -o "^[^/]*" | shuf | head 
 alias randimg="find / -mount -regextype posix-extended -regex '.*\.(jpg|jpeg|png)' -not -regex '.*(icon|favicon|appicon|gtk|theme).*' 2>/dev/null | shuf | head -1 | xargs -d '\n' -I {} sh -c 'echo {} && img2sixel {}'"
 alias blogdate="date '+%F %T %:z'"
 alias gitc="git commit -m"
+alias gitd="git diff"
+alias gits="git status"
 alias gitsub="git submodule update --recursive --remote"
