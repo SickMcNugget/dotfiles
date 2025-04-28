@@ -13,3 +13,4 @@ alias gitc="git commit -m"
 alias gitd="git diff"
 alias gits="git status"
 alias gitsub="git submodule update --recursive --remote"
+alias utc='date -u +"%Y-%m-%dT%H:%M:%S.%3NZ"'

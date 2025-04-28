@@ -1,0 +1,12 @@
+{
+    "main with args": {
+        "prefix": "mainargs",
+        "body": "import argparse\n\n\ndef main(args: argparse.Namespace):\n\t...\n\n\ndef parse_args() -> argparse.Namespace:\n\tparser = argparse.ArgumentParser()\n\treturn parser.parse_args()\n\n\nif __name__ == \"__main__\":\n\tmain(parse_args())",
+        "description": "Snippet for main function with args"
+    },
+    "main": {
+        "prefix": "main",
+        "body": "def main():\n\t...\n\nif __name__ == \"__main__\":\n\tmain()",
+        "description": "Snippet for main function with args"
+    }
+}
