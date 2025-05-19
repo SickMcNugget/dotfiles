@@ -1,12 +1,37 @@
 {
     "main with args": {
-        "prefix": "mainargs",
-        "body": "import argparse\n\n\ndef main(args: argparse.Namespace):\n\t...\n\n\ndef parse_args() -> argparse.Namespace:\n\tparser = argparse.ArgumentParser()\n\treturn parser.parse_args()\n\n\nif __name__ == \"__main__\":\n\tmain(parse_args())",
-        "description": "Snippet for main function with args"
+        "prefix": "boilerargs",
+        "body": [
+            "#!/usr/bin/env python",
+            "# Written by Joren (SickMcNugget)",
+            "# Created: ${CURRENT_YEAR}-${CURRENT_MONTH}-${CURRENT_DATE}",
+            "# ",
+            "# $1",
+            "import argparse\n\n",
+            "def main(args: argparse.Namespace):",
+            "\t...\n\n",
+            "def parse_args() -> argparse.Namespace:",
+            "\tparser = argparse.ArgumentParser()",
+            "\treturn parser.parse_args()\n\n",
+            "if __name__ == \"__main__\":",
+            "\tmain(parse_args())"
+        ],
+        "description": "Fills in standard boilerplate with argument parsing"
     },
     "main": {
-        "prefix": "main",
-        "body": "def main():\n\t...\n\nif __name__ == \"__main__\":\n\tmain()",
-        "description": "Snippet for main function with args"
+        "prefix": "boiler",
+        "body": [
+            "#!/usr/bin/env python",
+            "# Written by Joren (SickMcNugget)",
+            "# Created: ${CURRENT_YEAR}-${CURRENT_MONTH}-${CURRENT_DATE}",
+            "# ",
+            "# $1",
+            "\n",
+            "def main(args: argparse.Namespace):",
+            "\t...\n\n",
+            "if __name__ == \"__main__\":",
+            "\tmain()"
+        ],
+        "description": "Fills in standard boilerplate"
     }
 }
