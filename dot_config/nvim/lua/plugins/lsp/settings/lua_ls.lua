@@ -2,7 +2,7 @@ return {
 	settings = {
 		Lua = {
 			diagnostics = {
-				globals = { "vim" },
+				globals = { "vim", "redis", "ARGV" },
 			},
 			telemetry = { enable = false },
 			workspace = { checkThirdParty = false },

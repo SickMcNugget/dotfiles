@@ -14,5 +14,8 @@ vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnos
 -- vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
 
 -- Kill command mode with fire
-vim.keymap.set({"n"}, "q:", "<Nop>")
-vim.keymap.set({"c"}, "<C-f>", "<Nop>")
+vim.keymap.set({ "n" }, "q:", "<Nop>")
+vim.keymap.set({ "n" }, "q/", "<Nop>")
+vim.keymap.set({ "n" }, "q?", "<Nop>")
+vim.keymap.set({ "c" }, "<C-f>", "<Nop>")
+-- vim.keymap.set({ "n" }, "gu", "<Nop>")
