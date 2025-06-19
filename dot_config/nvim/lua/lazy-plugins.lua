@@ -265,22 +265,12 @@ lazy.setup({
 			code_blocks = {
 				sign = false
 			},
-			headings = {
-				heading_1 = { sign = "" },
-				heading_2 = { sign = "" },
+			markdown = {
+				headings = {
+					heading_1 = { sign = "" },
+					heading_2 = { sign = "" },
+				}
 			},
-			-- heading_1 = {
-			-- 	sign = nil
-			-- },
-			-- heading_2 = {
-			-- 	sign = nil
-			-- },
-			-- setext_1 = {
-			-- 	sign = nil
-			-- },
-			-- setext_2 = {
-			-- 	sign = nil
-			-- },
 			preview = {
 				icon_provider = "internal"
 			}
