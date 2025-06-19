@@ -20,8 +20,9 @@
 [edit]
     command = "nvim"
 [diff]
-    command = "nvim"
-    args = ["-d", '{{ "{{" }} .Destination {{ "}}" }}', '{{ "{{" }} .Target {{ "}}" }}']
+    reverse=true
+    # command = "nvim"
+    # args = ["-d", '{{ "{{" }} .Destination {{ "}}" }}', '{{ "{{" }} .Target {{ "}}" }}']
 [merge]
-    command = "nvim"
-    args = ["-d", '{{ "{{" }} .Destination {{ "}}" }}', '{{ "{{" }} .Source {{ "}}" }}', '{{ "{{" }} .Target {{ "}}" }}']
+    command = "meld"
+    args = ['{{ "{{" }} .Destination {{ "}}" }}', '{{ "{{" }} .Source {{ "}}" }}', '{{ "{{" }} .Target {{ "}}" }}']

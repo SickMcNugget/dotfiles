@@ -12,12 +12,9 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-local opts = {
+local lazy_opts = {
 	defaults = {
 		lazy = true,
-	},
-	install = {
-		colorscheme = { "tokyonight" },
 	},
 	ui = {
 		border = "single",
@@ -44,6 +41,7 @@ local opts = {
 		cache = {
 			enabled = true,
 		},
+		reset_packpath = true,
 		rtp = {
 			reset = true,
 			disabled_plugins = {
@@ -59,6 +57,10 @@ local opts = {
 			},
 		},
 	},
+	profiling = {
+		loader = true,
+		require = true
+	}
 }
 
 local status_ok, lazy = pcall(require, "lazy")
@@ -67,10 +69,14 @@ if not status_ok then
 end
 
 lazy.setup({
-	-- {
-	-- 	"tpope/vim-fugitive",
-	-- 	event = "VeryLazy",
-	-- },
+	{
+		"folke/tokyonight.nvim",
+		lazy = false,
+		priority = 1000,
+		config = function()
+			vim.cmd([[colorscheme tokyonight-moon]])
+		end
+	},
 	{
 		"tpope/vim-sleuth",
 		event = { "BufReadPost", "BufNewFile", "BufFilePost" },
@@ -136,14 +142,6 @@ lazy.setup({
 			vim.o.timeoutlen = 300
 		end,
 		opts = {},
-	},
-	{
-		"folke/tokyonight.nvim",
-		lazy = false,
-		priority = 1000,
-		opts = {
-			style = "moon",
-		},
 	},
 	{
 		require("plugins.treesitter"),
@@ -261,15 +259,33 @@ lazy.setup({
 		end
 	},
 	{
-		"iamcco/markdown-preview.nvim",
-		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-		build = "cd app && npm install && git restore .",
-		-- or if you use yarn: (i have not checked this, i use npm)
-		-- build = "cd app && yarn install && git restore .",
-		init = function()
-			vim.g.mkdp_filetypes = { "markdown" }
-		end,
-		ft = { "markdown" },
+		"OXY2DEV/markview.nvim",
+		lazy = false,
+		opts = {
+			code_blocks = {
+				sign = false
+			},
+			headings = {
+				heading_1 = { sign = "" },
+				heading_2 = { sign = "" },
+			},
+			-- heading_1 = {
+			-- 	sign = nil
+			-- },
+			-- heading_2 = {
+			-- 	sign = nil
+			-- },
+			-- setext_1 = {
+			-- 	sign = nil
+			-- },
+			-- setext_2 = {
+			-- 	sign = nil
+			-- },
+			preview = {
+				icon_provider = "internal"
+			}
+		},
+		ft = { "markdown" }
 	},
 	{
 		"kkoomen/vim-doge",
@@ -303,4 +319,4 @@ lazy.setup({
 		"Makaze/AnsiEsc",
 		cmd = { "AnsiEsc" }
 	}
-}, opts)
+}, lazy_opts)
