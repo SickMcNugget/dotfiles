@@ -29,7 +29,7 @@ vim.o.ignorecase = true
 vim.o.smartcase = true
 
 -- Keep signcolumn on by default
-vim.wo.signcolumn = "auto"
+vim.wo.signcolumn = "yes"
 -- scrolling
 vim.o.scrolloff = 8
 
@@ -63,8 +63,8 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 -- Add .slint filetype
 vim.filetype.add({
 	extension = {
-		slint = 'slint'
-	}
+		slint = "slint",
+	},
 })
 
 vim.g.loaded_node_provider = 0

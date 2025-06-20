@@ -59,8 +59,8 @@ local lazy_opts = {
 	},
 	profiling = {
 		loader = true,
-		require = true
-	}
+		require = true,
+	},
 }
 
 local status_ok, lazy = pcall(require, "lazy")
@@ -75,7 +75,7 @@ lazy.setup({
 		priority = 1000,
 		config = function()
 			vim.cmd([[colorscheme tokyonight-moon]])
-		end
+		end,
 	},
 	{
 		"tpope/vim-sleuth",
@@ -186,8 +186,20 @@ lazy.setup({
 		"mfussenegger/nvim-dap",
 		keys = {
 			-- 	add arguments later by following this link: https://github.com/lazyvim/lazyvim/blob/main/lua/lazyvim/plugins/extras/dap/core.lua
-			{ "<leader>dc", function() require("dap").continue() end,  desc = "Debug: Start/Continue", },
-			{ "<leader>dt", function() require("dap").terminate() end, desc = "Debug: Terminate", },
+			{
+				"<leader>dc",
+				function()
+					require("dap").continue()
+				end,
+				desc = "Debug: Start/Continue",
+			},
+			{
+				"<leader>dt",
+				function()
+					require("dap").terminate()
+				end,
+				desc = "Debug: Terminate",
+			},
 			{
 				"<leader>dp",
 				function()
@@ -195,7 +207,9 @@ lazy.setup({
 					dap.listeners.on_config["add_args"] = function(config)
 						local copy = vim.deepcopy(config)
 						local args = vim.fn.input("Args: ")
-						if vim.fn.empty(args) == 1 then return config end
+						if vim.fn.empty(args) == 1 then
+							return config
+						end
 
 						copy.args = require("dap.utils").splitstr(args)
 						return copy
@@ -203,16 +217,42 @@ lazy.setup({
 					dap.continue()
 					dap.listeners.on_config["add_args"] = nil
 				end,
-				desc = "Debug: Start With Parameters"
+				desc = "Debug: Start With Parameters",
 			},
-			{ "<leader>di", function() require("dap").step_into() end,         desc = "Debug: Step Into", },
-			{ "<leader>dn", function() require("dap").step_over() end,         desc = "Debug: Step Over", },
-			{ "<leader>do", function() require("dap").step_out() end,          desc = "Debug: Step Out", },
+			{
+				"<leader>di",
+				function()
+					require("dap").step_into()
+				end,
+				desc = "Debug: Step Into",
+			},
+			{
+				"<leader>dn",
+				function()
+					require("dap").step_over()
+				end,
+				desc = "Debug: Step Over",
+			},
+			{
+				"<leader>do",
+				function()
+					require("dap").step_out()
+				end,
+				desc = "Debug: Step Out",
+			},
 			-- { "<leader>dh", function() require("dap.ui.widgets").preview() end, desc = "Debug: preview",           mode = { 'n', 'v' } },
-			{ "<leader>b",  function() require("dap").toggle_breakpoint() end, desc = "Debug: Toggle Breakpoint", },
+			{
+				"<leader>b",
+				function()
+					require("dap").toggle_breakpoint()
+				end,
+				desc = "Debug: Toggle Breakpoint",
+			},
 			{
 				"<leader>B",
-				function() require("dap").set_breakpoint(vim.fn.input("BP condition: ")) end,
+				function()
+					require("dap").set_breakpoint(vim.fn.input("BP condition: "))
+				end,
 				desc = "Debug: Set Breakpoint",
 			},
 		},
@@ -244,38 +284,38 @@ lazy.setup({
 			},
 		},
 		config = function(_, opts)
-			require('conform').setup(opts)
+			require("conform").setup(opts)
 
 			vim.api.nvim_create_user_command("FormatDisable", function(args)
 				vim.g.disable_autoformat = true
 			end, {
-				desc = "Disable autoformat-on-save"
+				desc = "Disable autoformat-on-save",
 			})
 			vim.api.nvim_create_user_command("FormatEnable", function(args)
 				vim.g.disable_autoformat = false
 			end, {
-				desc = "Enable autoformat-on-save"
+				desc = "Enable autoformat-on-save",
 			})
-		end
+		end,
 	},
 	{
 		"OXY2DEV/markview.nvim",
 		lazy = false,
 		opts = {
 			code_blocks = {
-				sign = false
+				sign = false,
 			},
 			markdown = {
 				headings = {
 					heading_1 = { sign = "" },
 					heading_2 = { sign = "" },
-				}
+				},
 			},
 			preview = {
-				icon_provider = "internal"
-			}
+				icon_provider = "internal",
+			},
 		},
-		ft = { "markdown" }
+		ft = { "markdown" },
 	},
 	{
 		"kkoomen/vim-doge",
@@ -296,17 +336,17 @@ lazy.setup({
 		-- event = "VeryLazy",
 		init = function()
 			vim.g["suda_smart_edit"] = 1
-		end
+		end,
 	},
 	{
-		'windwp/nvim-autopairs',
+		"windwp/nvim-autopairs",
 		event = "InsertEnter",
-		config = true
+		config = true,
 		-- use opts = {} for passing setup options
 		-- this is equalent to setup({}) function
 	},
 	{
 		"Makaze/AnsiEsc",
-		cmd = { "AnsiEsc" }
-	}
+		cmd = { "AnsiEsc" },
+	},
 }, lazy_opts)
