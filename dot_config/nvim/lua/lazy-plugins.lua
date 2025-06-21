@@ -61,6 +61,9 @@ local lazy_opts = {
 		loader = true,
 		require = true,
 	},
+	rocks = {
+		enabled = false,
+	},
 }
 
 local status_ok, lazy = pcall(require, "lazy")
@@ -77,34 +80,19 @@ lazy.setup({
 			vim.cmd([[colorscheme tokyonight-moon]])
 		end,
 	},
+	-- {
+	-- 	"tpope/vim-sleuth",
+	-- 	event = { "BufReadPost", "BufNewFile", "BufFilePost" },
+	-- },
 	{
-		"tpope/vim-sleuth",
-		event = { "BufReadPost", "BufNewFile", "BufFilePost" },
+		-- swap out vim-sleuth for guess-indent to try it out.
+		"NMAC427/guess-indent.nvim",
 	},
 	{
-		"nvim-lualine/lualine.nvim",
-		event = { "UIEnter" },
-		opts = require("plugins.opts.lualine"),
+		require("plugins.lualine"),
 	},
 	{
-		"numToStr/Comment.nvim",
-		keys = {
-			{ "gb", mode = "o" },
-			{ "gc", mode = "o" },
-			{ "gcc" },
-			{ "gbc" },
-			{ "gco" },
-			{ "gcO" },
-			{ "gcA" },
-			{ "gc", mode = "x" },
-			{ "gb", mode = "x" },
-		},
-		opts = require("plugins.opts.Comment"),
-		config = function()
-			require("Comment").setup()
-			local ft = require("Comment.ft")
-			ft.slint = { "//%s", "/*%s*/" }
-		end,
+		require("plugins.Comment"),
 	},
 	{
 		"alker0/chezmoi.vim",
@@ -113,35 +101,17 @@ lazy.setup({
 			vim.g["chezmoi#use_tmp_buffer"] = true
 		end,
 	},
+	{
+		require("plugins.gitsigns"),
+	},
 	-- {
-	-- 	"mbbill/undotree",
-	-- 	keys = {
-	-- 		{ "<leader>u", "<cmd>undotreetoggle<cr>", desc = "undotree toggle" },
-	-- 	},
-	-- 	config = function()
-	-- 		vim.keymap.set("n", "<leader>u", vim.cmd.undotreetoggle)
-	-- 	end,
-	-- 	opts = {},
+	-- 	require("plugins.nvim-cmp"),
 	-- },
-	{
-		"lewis6991/gitsigns.nvim",
-		event = { "bufreadpost", "bufnewfile" },
-		opts = require("plugins.opts.gitsigns"),
-	},
-	{
-		require("plugins.nvim-cmp"),
-	},
 	{
 		require("plugins.telescope"),
 	},
 	{
-		"folke/which-key.nvim",
-		event = "VeryLazy",
-		init = function()
-			vim.o.timeout = true
-			vim.o.timeoutlen = 300
-		end,
-		opts = {},
+		require("plugins.which-key"),
 	},
 	{
 		require("plugins.treesitter"),
@@ -151,11 +121,6 @@ lazy.setup({
 		version = "*", -- use for stability; omit to use `main` branch for the latest features
 		event = "VeryLazy",
 		opts = {},
-		-- config = function()
-		-- 	require("nvim-surround").setup({
-		-- 		-- configuration here, or leave empty to use defaults
-		-- 	})
-		-- end,
 	},
 	{
 		"lukas-reineke/indent-blankline.nvim",
@@ -167,109 +132,28 @@ lazy.setup({
 		},
 	},
 	{
-		"neovim/nvim-lspconfig",
-		event = { "bufreadpost", "bufnewfile" },
-		dependencies = {
-			{
-				require("plugins.neodev"),
-			},
-			{
-				require("plugins.mason"),
-			},
-			{
-				"j-hui/fidget.nvim",
-				opts = require("plugins.opts.fidget"),
-			},
-		},
+		-- replacement for neodev
+		require("plugins.lazydev"),
 	},
 	{
-		"mfussenegger/nvim-dap",
-		keys = {
-			-- 	add arguments later by following this link: https://github.com/lazyvim/lazyvim/blob/main/lua/lazyvim/plugins/extras/dap/core.lua
-			{
-				"<leader>dc",
-				function()
-					require("dap").continue()
-				end,
-				desc = "Debug: Start/Continue",
-			},
-			{
-				"<leader>dt",
-				function()
-					require("dap").terminate()
-				end,
-				desc = "Debug: Terminate",
-			},
-			{
-				"<leader>dp",
-				function()
-					local dap = require("dap")
-					dap.listeners.on_config["add_args"] = function(config)
-						local copy = vim.deepcopy(config)
-						local args = vim.fn.input("Args: ")
-						if vim.fn.empty(args) == 1 then
-							return config
-						end
-
-						copy.args = require("dap.utils").splitstr(args)
-						return copy
-					end
-					dap.continue()
-					dap.listeners.on_config["add_args"] = nil
-				end,
-				desc = "Debug: Start With Parameters",
-			},
-			{
-				"<leader>di",
-				function()
-					require("dap").step_into()
-				end,
-				desc = "Debug: Step Into",
-			},
-			{
-				"<leader>dn",
-				function()
-					require("dap").step_over()
-				end,
-				desc = "Debug: Step Over",
-			},
-			{
-				"<leader>do",
-				function()
-					require("dap").step_out()
-				end,
-				desc = "Debug: Step Out",
-			},
-			-- { "<leader>dh", function() require("dap.ui.widgets").preview() end, desc = "Debug: preview",           mode = { 'n', 'v' } },
-			{
-				"<leader>b",
-				function()
-					require("dap").toggle_breakpoint()
-				end,
-				desc = "Debug: Toggle Breakpoint",
-			},
-			{
-				"<leader>B",
-				function()
-					require("dap").set_breakpoint(vim.fn.input("BP condition: "))
-				end,
-				desc = "Debug: Set Breakpoint",
-			},
-		},
-		dependencies = {
-			{
-				require("plugins.nvim-dap-ui"),
-			},
-			{
-				require("plugins.mason-nvim-dap"),
-			},
-		},
+		-- Contains mason.nvim, mason-lspconfig.nvim, fidget.nvim, too.
+		-- blink is configured elsewhere but listed as a dependency here.
+		require("plugins.nvim-lspconfig"),
+	},
+	{
+		-- Contains LuaSnip and friendly-snippets setup, too.
+		require("plugins.blink"),
+	},
+	{
+		-- Contains mason-nvim-dap.nvim and nvim-dap-ui, nvim-nio
+		-- mason.nvim is configured elsewhere, but is listed as a dependency here.
+		require("plugins.nvim-dap"),
 	},
 	{
 		"stevearc/conform.nvim",
 		event = "VeryLazy",
 		opts = {
-			format_on_save = function(bufnr)
+			format_on_save = function(_)
 				if vim.g.disable_autoformat then
 					return
 				end
@@ -286,12 +170,12 @@ lazy.setup({
 		config = function(_, opts)
 			require("conform").setup(opts)
 
-			vim.api.nvim_create_user_command("FormatDisable", function(args)
+			vim.api.nvim_create_user_command("FormatDisable", function(_)
 				vim.g.disable_autoformat = true
 			end, {
 				desc = "Disable autoformat-on-save",
 			})
-			vim.api.nvim_create_user_command("FormatEnable", function(args)
+			vim.api.nvim_create_user_command("FormatEnable", function(_)
 				vim.g.disable_autoformat = false
 			end, {
 				desc = "Enable autoformat-on-save",
@@ -302,13 +186,13 @@ lazy.setup({
 		"OXY2DEV/markview.nvim",
 		lazy = false,
 		opts = {
-			code_blocks = {
-				sign = false,
-			},
 			markdown = {
 				headings = {
 					heading_1 = { sign = "" },
 					heading_2 = { sign = "" },
+				},
+				code_blocks = {
+					sign = false,
 				},
 			},
 			preview = {
@@ -327,7 +211,7 @@ lazy.setup({
 			vim.g["doge_doc_standard_python"] = "numpy"
 		end,
 		config = function()
-			vim.keymap.set("n", "<Leader>d", "<Plug>(doge-generate)")
+			vim.keymap.set("n", "md", "<Plug>(doge-generate)")
 		end,
 	},
 	{
@@ -342,8 +226,6 @@ lazy.setup({
 		"windwp/nvim-autopairs",
 		event = "InsertEnter",
 		config = true,
-		-- use opts = {} for passing setup options
-		-- this is equalent to setup({}) function
 	},
 	{
 		"Makaze/AnsiEsc",
