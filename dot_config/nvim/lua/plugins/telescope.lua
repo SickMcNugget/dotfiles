@@ -45,13 +45,13 @@ return {
 		vim.keymap.set("n", "<leader>sn", function()
 			builtin.find_files({ cwd = vim.fn.stdpath("config"), hidden = true, no_ignore = true })
 		end, { desc = "[S]earch [N]eovim files" })
-		if vim.fn.executable("chezmoi") == 1 then
-			local ret = vim.system({ "chezmoi", "source-path" }, { text = true }):wait()
-			local chezmoi_dir = string.gsub(ret.stdout, "\n", "")
-			vim.keymap.set("n", "<leader>sc", function()
-				builtin.find_files({ cwd = chezmoi_dir, hidden = true })
-			end, { desc = "[S]earch [C]hezmoi files" })
-		end
+		-- if vim.fn.executable("chezmoi") == 1 then
+		-- 	local ret = vim.system({ "chezmoi", "source-path" }, { text = true }):wait()
+		-- 	local chezmoi_dir = string.gsub(ret.stdout, "\n", "")
+		-- 	vim.keymap.set("n", "<leader>sc", function()
+		-- 		builtin.find_files({ cwd = chezmoi_dir, hidden = true })
+		-- 	end, { desc = "[S]earch [C]hezmoi files" })
+		-- end
 		vim.keymap.set("n", "<leader>sm", builtin.man_pages, { desc = "[S]earch [M]anpages" })
 		vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "[S]earch [H]elp" })
 		vim.keymap.set("n", "<leader>sd", builtin.diagnostics, { desc = "[S]earch [D]iagnostics" })

@@ -57,10 +57,10 @@ local lazy_opts = {
 			},
 		},
 	},
-	profiling = {
-		loader = true,
-		require = true,
-	},
+	-- profiling = {
+	-- 	loader = true,
+	-- 	require = true,
+	-- },
 	rocks = {
 		enabled = false,
 	},
