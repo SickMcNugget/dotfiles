@@ -114,13 +114,14 @@ lazy.setup({
 	},
 	{
 		"kylechui/nvim-surround",
-		version = "*", -- use for stability; omit to use `main` branch for the latest features
+		version = "^3.0.0", -- use for stability; omit to use `main` branch for the latest features
 		event = "VeryLazy",
 		opts = {},
 	},
 	{
 		"lukas-reineke/indent-blankline.nvim",
 		main = "ibl",
+		version = "^3.0.0",
 		event = { "uienter" },
 		opts = {
 			indent = { char = "┊" },
@@ -147,6 +148,7 @@ lazy.setup({
 	},
 	{
 		"stevearc/conform.nvim",
+		tag = "v9.0.0",
 		event = "VeryLazy",
 		opts = {
 			format_on_save = function(_)
