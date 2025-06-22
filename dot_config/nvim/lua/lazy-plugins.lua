@@ -195,6 +195,12 @@ lazy.setup({
 					sign = false,
 				},
 			},
+			typst = {
+				enable = false,
+			},
+			latex = {
+				enable = false,
+			},
 			preview = {
 				icon_provider = "internal",
 			},
