@@ -80,13 +80,9 @@ lazy.setup({
 			vim.cmd([[colorscheme tokyonight-moon]])
 		end,
 	},
-	-- {
-	-- 	"tpope/vim-sleuth",
-	-- 	event = { "BufReadPost", "BufNewFile", "BufFilePost" },
-	-- },
 	{
-		-- swap out vim-sleuth for guess-indent to try it out.
-		"NMAC427/guess-indent.nvim",
+		"tpope/vim-sleuth",
+		event = { "BufReadPost", "BufNewFile", "BufFilePost" },
 	},
 	{
 		require("plugins.lualine"),

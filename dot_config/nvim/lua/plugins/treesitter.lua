@@ -2,11 +2,11 @@
 -- See `:help nvim-treesitter`
 return {
 	"nvim-treesitter/nvim-treesitter",
+	lazy = false,
 	dependencies = {
 		"nvim-treesitter/nvim-treesitter-textobjects",
 	},
 	build = ":TSUpdate",
-	event = { "BufReadPost", "BufNewFile" },
 	config = function()
 		require("nvim-treesitter.configs").setup({
 			-- Add languages to be installed here that you want installed for treesitter
@@ -36,20 +36,14 @@ return {
 					enable = true,
 					set_jumps = true, -- whether to set jumps in the jumplist
 					goto_next_start = {
-						["]m"] = "@function.outer",
-						["]]"] = "@class.outer",
-					},
-					goto_next_end = {
-						["]M"] = "@function.outer",
-						["]["] = "@class.outer",
+						[";f"] = "@function.outer",
+						[";c"] = "@class.outer",
+						[";a"] = "@parameter.outer",
 					},
 					goto_previous_start = {
-						["[m"] = "@function.outer",
-						["[["] = "@class.outer",
-					},
-					goto_previous_end = {
-						["[M"] = "@function.outer",
-						["[]"] = "@class.outer",
+						[";F"] = "@function.outer",
+						[";C"] = "@class.outer",
+						[";A"] = "@parameter.outer",
 					},
 				},
 				swap = {
