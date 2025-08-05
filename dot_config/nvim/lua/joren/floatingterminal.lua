@@ -57,13 +57,19 @@ local rerun_last_command = function()
 		if vim.bo[state.floating.buf].buftype ~= "terminal" then
 			vim.cmd.terminal()
 		end
-		vim.api.nvim_input("i<up><enter><esc><esc>")
+		vim.api.nvim_input("i<up><enter>")
 	else
 		vim.api.nvim_win_hide(state.floating.win)
 	end
 end
 
-vim.keymap.set("t", "<esc><esc>", "<c-\\><c-n>")
+local normal_mode_keys = { "<PageUp>", "<PageDown>" }
+
+for _, key in ipairs(normal_mode_keys) do
+	vim.keymap.set("t", key, function() vim.api.nvim_input("" .. key) end)
+end
+
+vim.keymap.set("t", "<esc>", toggle_terminal)
 vim.keymap.set({ "n", "t" }, "<leader>tt", toggle_terminal)
 vim.keymap.set({ "n", "t" }, "<leader>tp", rerun_last_command)
--- vim.keymap.set({ })
+vim.keymap.set("t", "<leader>n", function() vim.api.nvim_input("") end)
