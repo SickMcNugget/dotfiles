@@ -52,12 +52,20 @@ local toggle_terminal = function()
 end
 
 local rerun_last_command = function()
+	local clear_terminal = function()
+		local sb = vim.opt_local.scrollback
+		vim.opt_local.scrollback = 1
+		vim.api.nvim_input("i<C-L><enter>")
+		vim.opt_local.scrollback = sb
+	end
+
 	if not vim.api.nvim_win_is_valid(state.floating.win) then
 		state.floating = create_floating_window { buf = state.floating.buf }
 		if vim.bo[state.floating.buf].buftype ~= "terminal" then
 			vim.cmd.terminal()
 		end
-		vim.api.nvim_input("i<up><enter>")
+		clear_terminal()
+		vim.api.nvim_input("<up><enter><C-\\><C-N>")
 	else
 		vim.api.nvim_win_hide(state.floating.win)
 	end
@@ -66,10 +74,10 @@ end
 local normal_mode_keys = { "<PageUp>", "<PageDown>" }
 
 for _, key in ipairs(normal_mode_keys) do
-	vim.keymap.set("t", key, function() vim.api.nvim_input("" .. key) end)
+	vim.keymap.set("t", key, function() vim.api.nvim_input("<C-\\><C-N>" .. key) end)
 end
 
 vim.keymap.set("t", "<esc>", toggle_terminal)
 vim.keymap.set({ "n", "t" }, "<leader>tt", toggle_terminal)
 vim.keymap.set({ "n", "t" }, "<leader>tp", rerun_last_command)
-vim.keymap.set("t", "<leader>n", function() vim.api.nvim_input("") end)
+vim.keymap.set("t", "<leader>n", function() vim.api.nvim_input("<C-\\><C-N>") end)

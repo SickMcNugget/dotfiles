@@ -77,3 +77,8 @@ vim.keymap.set("x", "<leader>;", function()
 
 	vim.api.nvim_buf_set_lines(0, start_line - 1, end_line, false, lines)
 end, { desc = "Uniformly toggle semicolons for selection lines" })
+
+-- Quickfix binds
+vim.keymap.set("n", "<M-j>", "<cmd>cnext<CR>")
+vim.keymap.set("n", "<M-k>", "<cmd>cprev<CR>")
+vim.keymap.set("n", "<M-q>", "<cmd>cclose<CR>")
