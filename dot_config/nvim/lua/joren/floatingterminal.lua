@@ -78,6 +78,6 @@ for _, key in ipairs(normal_mode_keys) do
 end
 
 vim.keymap.set("t", "<esc>", toggle_terminal)
-vim.keymap.set({ "n", "t" }, "<leader>tt", toggle_terminal)
-vim.keymap.set({ "n", "t" }, "<leader>tp", rerun_last_command)
-vim.keymap.set("t", "<leader>n", function() vim.api.nvim_input("<C-\\><C-N>") end)
+vim.keymap.set({ "n", "t" }, "<M-t>t", toggle_terminal)
+vim.keymap.set({ "n", "t" }, "<M-t>p", rerun_last_command)
+vim.keymap.set("t", "<M-t>n", function() vim.api.nvim_input("<C-\\><C-N>") end)
