@@ -14,3 +14,22 @@ function cargo-features() {
 		printf "Unhandled error code $?" >&2
 	fi
 }
+
+function blogpost() {
+	if [ $# -ne 1 ]; then
+		printf "\x1b[33m%s\x1b[0m\n" "Please run with a file name"
+		return
+	fi
+	local file_name=$(echo $1 | tr ' ' '-' | tr '_' '-')
+	local md_file="$(date +%Y-%m-%d)-$file_name.markdown"
+
+	cat <<-EOF >$md_file
+	---
+	layout: post
+	title: "$(echo $file_name | tr '-' ' ')"
+	date: $(blogdate)
+	categories: 
+	published: false
+	---
+	EOF
+}
