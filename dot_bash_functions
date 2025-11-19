@@ -20,13 +20,15 @@ function blogpost() {
 		printf "\x1b[33m%s\x1b[0m\n" "Please run with a file name"
 		return
 	fi
-	local file_name=$(echo $1 | tr ' ' '-' | tr '_' '-')
+
+	local title=$1
+	local file_name=$(echo $1 | tr '[:upper:]' '[:lower:]' | tr ' ' '-' | tr '_' '-')
 	local md_file="$(date +%Y-%m-%d)-$file_name.markdown"
 
 	cat <<-EOF >$md_file
 	---
 	layout: post
-	title: "$(echo $file_name | tr '-' ' ')"
+	title: "$title"
 	date: $(blogdate)
 	categories: 
 	published: false
