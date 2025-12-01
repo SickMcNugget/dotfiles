@@ -226,11 +226,11 @@ lazy.setup({
 			vim.g["suda_smart_edit"] = 1
 		end,
 	},
-	{
-		"windwp/nvim-autopairs",
-		event = "InsertEnter",
-		config = true,
-	},
+	-- {
+	-- 	"windwp/nvim-autopairs",
+	-- 	event = "InsertEnter",
+	-- 	config = true,
+	-- },
 	{
 		"Makaze/AnsiEsc",
 		cmd = { "AnsiEsc" },
