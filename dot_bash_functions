@@ -22,7 +22,7 @@ function blogpost() {
 	fi
 
 	local title=$1
-	local file_name=$(echo $1 | tr '[:upper:]' '[:lower:]' | tr ' ' '-' | tr '_' '-')
+	local file_name=$(echo $1 | tr '[:upper:]' '[:lower:]' | tr ' _' '-' | tr -d "'")
 	local md_file="$(date +%Y-%m-%d)-$file_name.markdown"
 
 	cat <<-EOF >$md_file
