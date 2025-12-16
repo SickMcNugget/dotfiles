@@ -42,6 +42,9 @@ vim.filetype.add({
 	extension = {
 		slint = "slint",
 	},
+	filename = {
+		['.bash_functions'] = 'bash'
+	},
 })
 -- See `:help vim.hl.on_yank()`
 local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
