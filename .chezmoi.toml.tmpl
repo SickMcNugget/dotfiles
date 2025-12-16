@@ -21,8 +21,9 @@
     command = "nvim"
 [diff]
     reverse=true
-    # command = "nvim"
-    # args = ["-d", '{{ "{{" }} .Destination {{ "}}" }}', '{{ "{{" }} .Target {{ "}}" }}']
+    command = "diff"
+    args = ["--color=always", "-u"]
+    pager = "less -R"
 [merge]
     command = "meld"
     args = ['{{ "{{" }} .Destination {{ "}}" }}', '{{ "{{" }} .Source {{ "}}" }}', '{{ "{{" }} .Target {{ "}}" }}']
