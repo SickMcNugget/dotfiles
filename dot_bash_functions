@@ -95,7 +95,7 @@ function copy-unity-project() {
 		return 1
 	fi
 	
-	declare -a tocopy=(
+	tocopy=(
 		"Assembly-CSharp.csproj" 
 		"Assembly-CSharp-Editor.csproj"
 		"Assets/InputSystem_Actions.inputactions" 
@@ -110,10 +110,20 @@ function copy-unity-project() {
 		".vscode"
 	)
 
+	# prepend project name to all paths
 	for i in "${!tocopy[@]}"; do
 		tocopy[i]="$existingproject/${tocopy[i]}"
 	done
 
+	# Find longest path for padding
+	longest=0
+	for path in "${tocopy[@]}"; do
+		if (( ${#path} > longest )); then
+			longest=${#path}
+		fi
+	done
+
+	# Copy all files/folders, preserving hierarchy from array
 	for path in "${tocopy[@]}"; do
 		if [ ! -e "$path" ]; then
 			printf "\x1b[33m%s\x1b[0m\n" "Path: $path does not exist" >&2
@@ -126,7 +136,27 @@ function copy-unity-project() {
 		newfiledir="$newproject/$filedir"
 		mkdir -p "$newfiledir"
 
+		copystr="Copying"
+		if [ -d $path ]; then
+			copystr+="_directory"
+		elif [ -f $path ]; then
+			copystr+="_file"
+		fi
+
+		printf "%-18s %-${longest}s %s\n" "$copystr" "$path" "$newfiledir/$basefile"
 		cp -r "$path" "$newfiledir/$basefile"
 	done
+	# Rename solution file to new project name
 	cp "${slnx_file[@]}" "$newproject/$newproject.slnx"
+
+	tomkdir=(
+		"Assets/Materials"
+		"Assets/Scenes"
+		"Assets/Scripts"
+	)
+
+	for path in "${tomkdir[@]}"; do
+		printf "%-18s %s\n" "Creating_directory" "$newproject/$path"
+		mkdir -p "$newproject/$path"
+	done
 }
