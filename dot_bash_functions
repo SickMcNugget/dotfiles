@@ -64,3 +64,69 @@ function debuginfo-download() {
 	local buildid=$(elf-buildid "$1")
 	DEBUGINFOD_URLS="https://debuginfod.ubuntu.com" debuginfod-find debuginfo "${buildid}"
 }
+
+function copy-unity-project() {
+	if [ $# -ne 2 ]; then
+		printf "\x1b[33m%s\x1b[0m\n" "Please run with the existing project and the destination path" >&2
+		return 1
+	fi
+
+	if [ ! -d "$1" ]; then
+		printf "\x1b[31m%s\x1b[0m\n" "Project: ${1} does not exist" >&2
+		return 1
+	fi
+	
+	if [ -d "$2" ]; then
+		printf "\x1b[31m%s\x1b[0m\n" "Project: ${2} already exists" >&2
+		return 1
+	fi
+
+	existingproject="$(realpath --relative-to="${PWD}" "$1")"
+	newproject="$(realpath --relative-to="${PWD}" "$2")"
+
+	slnx_file=("$existingproject"/*.slnx)
+	if [ "${#slnx_file[@]}" -ne 1 ]; then
+		printf "\x1b[31m%s\x1b[0m\n" "Solution file: ${1} contains more than 1 .slnx file" >&2
+		return 1
+	fi
+
+	if [ ! -f "${slnx_file[@]}" ]; then
+		printf "\x1b[31m%s\x1b[0m\n" "Solution file: ${slnx_file[@]} does not exist" >&2
+		return 1
+	fi
+	
+	declare -a tocopy=(
+		"Assembly-CSharp.csproj" 
+		"Assembly-CSharp-Editor.csproj"
+		"Assets/InputSystem_Actions.inputactions" 
+		"Assets/InputSystem_Actions.inputactions.meta"
+		"Assets/Settings"
+		"Assets/Settings.meta"
+		"Packages"
+		"ProjectSettings"
+		"UserSettings"
+		".editorconfig"
+		".gitignore"
+		".vscode"
+	)
+
+	for i in "${!tocopy[@]}"; do
+		tocopy[i]="$existingproject/${tocopy[i]}"
+	done
+
+	for path in "${tocopy[@]}"; do
+		if [ ! -e "$path" ]; then
+			printf "\x1b[33m%s\x1b[0m\n" "Path: $path does not exist" >&2
+			continue
+		fi
+
+		filedir="$(dirname $(realpath --relative-to="$existingproject" $path))"
+		basefile="$(basename $path)"
+
+		newfiledir="$newproject/$filedir"
+		mkdir -p "$newfiledir"
+
+		cp -r "$path" "$newfiledir/$basefile"
+	done
+	cp "${slnx_file[@]}" "$newproject/$newproject.slnx"
+}
