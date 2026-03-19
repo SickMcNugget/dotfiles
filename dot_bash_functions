@@ -35,3 +35,32 @@ function blogpost() {
 	---
 	EOF
 }
+
+function elf-buildid() {
+	if [ $# -ne 1 ]; then
+		printf "\x1b[33m%s\x1b[0m\n" "Please run with a file name" >&2
+		return 1
+	fi
+
+	if [ ! -f "$1" ]; then
+		printf "\x1b[31m%s\x1b[0m\n" "File: ${1} does not exist" >&2
+		return 1
+	fi
+
+	readelf -n "$1" | sed -n 's/Build ID: *\(.*\)/\1/p' | tr -d '[:space:]'
+}
+
+function debuginfo-download() {
+	if [ $# -ne 1 ]; then
+		printf "\x1b[33m%s\x1b[0m\n" "Please run with a file name" >&2
+		return 1
+	fi
+
+	if [ ! -f "$1" ]; then
+		printf "\x1b[31m%s\x1b[0m\n" "File: ${1} does not exist" >&2
+		return 1
+	fi
+
+	local buildid=$(elf-buildid "$1")
+	DEBUGINFOD_URLS="https://debuginfod.ubuntu.com" debuginfod-find debuginfo "${buildid}"
+}
