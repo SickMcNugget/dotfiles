@@ -6,7 +6,7 @@ return {
 	tag = "v2.3.0",
 	event = { "BufReadPost", "BufNewFile" },
 	dependencies = {
-		{ "mason-org/mason.nvim", tag = "v2.0.0", opts = {} },
+		{ "mason-org/mason.nvim", tag = "v2.0.0", opts = {}, cmd = "Mason" },
 		"mason-org/mason-lspconfig.nvim",
 		tag = "v2.0.0",
 		{ "j-hui/fidget.nvim",    tag = "v1.6.1", opts = {} },
