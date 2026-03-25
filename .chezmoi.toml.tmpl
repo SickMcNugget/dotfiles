@@ -17,6 +17,8 @@
 	email = {{ $email | quote }}
 	name = {{ $name | quote }}
 	work = {{ $work }}
+
+{{ if eq .chezmoi.os "linux" -}}
 [edit]
     command = "nvim"
 [diff]
@@ -27,3 +29,4 @@
 [merge]
     command = "meld"
     args = ['{{ "{{" }} .Destination {{ "}}" }}', '{{ "{{" }} .Source {{ "}}" }}', '{{ "{{" }} .Target {{ "}}" }}']
+{{ end -}}

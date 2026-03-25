@@ -1,3 +1,19 @@
+// Start with guards for each individual OS 
+{{ if ne .chezmoi.os "linux" -}}
+.bash_aliases
+.bash_functions
+.bashrc
+.profile
+.selected_editor
+.config/tmux
+.config/zathura
+.config/conda
+.local/bin/tmux-windows
+{{ else if ne .chezmoi.os "windows" -}}
+pshellrc.ps1
+{{ end -}}
+
+// Shared-ignores
 .config/tmux/plugins
 
 .config/nvim/lazy-lock.json

@@ -65,9 +65,38 @@ function debuginfo-download() {
 	DEBUGINFOD_URLS="https://debuginfod.ubuntu.com" debuginfod-find debuginfo "${buildid}"
 }
 
-function copy-unity-project() {
+# Notice the function is defined inside of ().
+# This uses a subshell to prevent inner (helper) functions from leaking
+function copy-unity-project() (
+	function copy-unity-project-help() {
+		printf "%s\n" "copy-unity-project [-h] [-k] SOURCE DEST" >&2
+		printf "%-12s %s\n" "-h" "Display this help menu" >&2
+		printf "%-12s %s\n" "-k" "Also keep existing Materials, Prefabs and Scenes" >&2
+		printf "%-12s %s\n" "SOURCE" "The existing Unity project to copy" >&2
+		printf "%-12s %s\n" "DEST" "The (not existing) Unity project to create" >&2
+	}
+
+	declare -a tocopy
+
+	while getopts "hk" opt; do
+		case $opt in
+			h)
+				copy-unity-project-help
+				return 0
+				;;
+			k)
+				tocopy+=(
+					"Assets/Materials"
+					"Assets/Prefabs"
+					"Scenes"
+				)
+				;;
+		esac
+	done
+	shift $((OPTIND-1))
+
 	if [ $# -ne 2 ]; then
-		printf "\x1b[33m%s\x1b[0m\n" "Please run with the existing project and the destination path" >&2
+		copy-unity-project-help
 		return 1
 	fi
 
@@ -95,7 +124,7 @@ function copy-unity-project() {
 		return 1
 	fi
 	
-	tocopy=(
+	tocopy+=(
 		"Assembly-CSharp.csproj" 
 		"Assembly-CSharp-Editor.csproj"
 		"Assets/InputSystem_Actions.inputactions" 
@@ -156,7 +185,11 @@ function copy-unity-project() {
 	)
 
 	for path in "${tomkdir[@]}"; do
-		printf "%-18s %s\n" "Creating_directory" "$newproject/$path"
-		mkdir -p "$newproject/$path"
+		if [ -d "$path" ]; then
+			printf "%-18s %s\n" "Directory_exists" "$newproject/$path"
+		else
+			printf "%-18s %s\n" "Creating_directory" "$newproject/$path"
+			mkdir -p "$newproject/$path"
+		fi
 	done
-}
+)
