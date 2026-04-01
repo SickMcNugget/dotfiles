@@ -88,7 +88,7 @@ function copy-unity-project() (
 				tocopy+=(
 					"Assets/Materials"
 					"Assets/Prefabs"
-					"Scenes"
+					"Assets/Scenes"
 				)
 				;;
 		esac
@@ -133,7 +133,6 @@ function copy-unity-project() (
 		"Assets/Settings.meta"
 		"Packages"
 		"ProjectSettings"
-		"UserSettings"
 		".editorconfig"
 		".gitignore"
 		".vscode"
