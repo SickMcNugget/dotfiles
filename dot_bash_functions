@@ -184,11 +184,12 @@ function copy-unity-project() (
 	)
 
 	for path in "${tomkdir[@]}"; do
-		if [ -d "$path" ]; then
-			printf "%-18s %s\n" "Directory_exists" "$newproject/$path"
+		newprojectpath="$newproject/$path"
+		if [ -d "$newprojectpath" ]; then
+			printf "%-18s %s\n" "Directory_exists" "$newprojectpath"
 		else
-			printf "%-18s %s\n" "Creating_directory" "$newproject/$path"
-			mkdir -p "$newproject/$path"
+			printf "%-18s %s\n" "Creating_directory" "$newprojectpath"
+			mkdir -p "$newprojectpath"
 		fi
 	done
 )
