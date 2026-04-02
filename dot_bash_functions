@@ -181,6 +181,7 @@ function copy-unity-project() (
 		"Assets/Materials"
 		"Assets/Scenes"
 		"Assets/Scripts"
+		"Build"
 	)
 
 	for path in "${tomkdir[@]}"; do
