@@ -1,0 +1,42 @@
+BasedOnStyle: LLVM
+IndentWidth: 4
+AlignArrayOfStructures: Right
+
+AlignConsecutiveAssignments:
+  Enabled: true
+  AlignCompound: true
+  AlignFunctionDeclarations: true
+  AlignFunctionPointers: true
+  PadOperators: true
+
+AlignConsecutiveMacros:
+  Enabled: true
+
+AlignConsecutiveShortCaseStatements:
+  Enabled: true
+  AlignCaseColons: true
+  AlignCaseArrows: true
+
+AlignEscapedNewlines: LeftWithLastLine
+AlignOperands: AlignAfterOperator
+AllowShortIfStatementsOnASingleLine: Never
+BinPackArguments: false
+BinPackParameters: OnePerLine
+BreakBeforeBraces: Attach
+EnumTrailingComma: Leave
+InsertBraces: false
+InsertNewlineAtEOF: true
+InsertTrailingCommas: Wrapped
+LineEnding: LF
+MaxEmptyLinesToKeep: 1
+PointerAlignment: Right
+QualifierAlignment: Leave
+RemoveBracesLLVM: false
+RemoveEmptyLinesInUnwrappedLines: true
+SpaceAfterCStyleCast: false
+SpaceAfterLogicalNot: false
+SpaceBeforeAssignmentOperators: true
+SpaceBeforeCaseColon: false
+SpaceBeforeParens: ControlStatements
+SpaceBeforeSquareBrackets: false
+SpacesInAngles: Never
