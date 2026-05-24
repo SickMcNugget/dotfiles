@@ -9,8 +9,10 @@
 .config/zathura
 .config/conda
 .local/bin/tmux-windows
+.chezmoiscripts/linux/**
 {{ else if ne .chezmoi.os "windows" -}}
 pshellrc.ps1
+.chezmoiscripts/windows/**
 {{ end -}}
 
 // Shared-ignores
