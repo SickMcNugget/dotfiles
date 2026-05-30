@@ -70,15 +70,6 @@ to_install=()
     pacman -S "${to_install[@]}"
 {{ end -}}
 
-# == tmux ==
-# tpm
-if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
-    export TMUX_PLUGIN_MANAGER_PATH="$HOME/.tmux/plugins/"
-    git clone "https://github.com/tmux-plugins/tpm" "$HOME/.tmux/plugins/tpm"
-else
-    echo "tmux: tpm already installed"
-fi
-
 # == Neovim ==
 # editor
 if [ -f /usr/local/bin/nvim ]; then
