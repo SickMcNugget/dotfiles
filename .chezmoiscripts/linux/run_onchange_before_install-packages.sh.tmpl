@@ -1,0 +1,75 @@
+#!/usr/bin/env bash
+# This script should run before dotfiles are updated locally. This means that 
+# we can't rely on bash variables like XDG_DATA_HOME. Essentially only packages
+# should be installed here. If an application needs to be installed, this 
+# should be done in run_onchange_after_install_applications.sh.tmpl
+set -euo pipefail
+
+to_install=()
+
+# Distro-specific package installs (ubuntu and debian separated for potential deviation)
+{{ if eq .chezmoi.osRelease.id "ubuntu" "debian" "neon" -}}
+    to_install+=(
+        "tmux"
+	"ripgrep"
+	"ninja-build"
+	"gettext"
+	"cmake"
+	"unzip"
+	"curl"
+	"fd-find"
+	"zathura"
+	"python3-venv"
+	"build-essential"
+	"libssl-dev"
+	"zlib1g-dev"
+	"libbz2-dev"
+	"libreadline-dev"
+	"libsqlite3-dev"
+	"curl"
+	"git"
+	"libncursesw5-dev"
+	"xz-utils"
+	"tk-dev"
+	"libxml2-dev"
+	"libxmlsec1-dev"
+	"libffi-dev"
+	"liblzma-dev"
+	"autoconf"
+	"patch"
+	"libyaml-dev"
+	"libreadline6-dev"
+	"libgmp-dev"
+	"libncurses5-dev"
+	"libgdbm-dev"
+	"libdb-dev"
+	"uuid-dev"
+    )
+    {{ if eq .chezmoi.osRelease.id "debian" -}}
+	to_install+=(
+	    "command-not-found"
+	)
+    {{ end -}}
+{{ else if eq .chezmoi.osRelease.id "arch" -}}
+    to_install+=(
+        "tmux"
+        "ripgrep"
+        "base-devel"
+        "ninja"
+        "cmake"
+        "unzip"
+        "curl"
+        "fd"
+    )
+{{ end -}}
+
+
+{{ if eq .chezmoi.osRelease.id "ubuntu" "neon" "debian" -}}
+    sudo apt update -y
+    sudo apt install -y "${to_install[@]}"
+    {{ if eq .chezmoi.osRelease.id "debian" -}}
+        sudo update-command-not-found
+    {{ end -}}
+{{ else if eq .chezmoi.osRelease.id "arch" -}}
+    pacman -S --noconfirm "${to_install[@]}"
+{{ end -}}

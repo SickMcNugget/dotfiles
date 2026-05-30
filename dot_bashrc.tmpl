@@ -101,49 +101,36 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 # ~/.bash_aliases, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
+[ -f ~/.bash_aliases ] && \. ~/.bash_aliases
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
 if ! shopt -oq posix; then
   if [ -f /usr/share/bash-completion/bash_completion ]; then
-    . /usr/share/bash-completion/bash_completion
+    \. /usr/share/bash-completion/bash_completion
   elif [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
+    \. /etc/bash_completion
   fi
 fi
 
 # Function definitions
-if [ -f ~/.bash_functions ]; then
-    . ~/.bash_functions
-fi
+[ -f ~/.bash_functions ] && \. ~/.bash_functions
 
+# Environment definitions
+# These environment variables should not rely on the existence
+# of directories or other files. They should essentially be
+# static configuration. I didn't want to do this but chezmoi
+# kind of forced my hand.
+[ -f ~/.bash_env ] && \. ~/.bash_env
 
-{{ if eq .chezmoi.os "linux" }}
-{{  if (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
-# So tensorflow can find cuda libraries on WSL
-export LD_LIBRARY_PATH=/usr/lib/wsl/lib
-{{  end }}
-{{ end }}
 # export JAVA_HOME="/usr/lib/jvm/java-1.11.0-openjdk-amd64"
 # export PATH="$JAVA_HOME/bin:${PATH:+${PATH}}"
-
-export EDITOR="/usr/local/bin/nvim"
-export SYSTEMD_EDITOR="/usr/local/bin/nvim"
 
 # Set default MANPATH
 if [ -z "$MANPATH" ]; then
     export MANPATH="/usr/local/man:/usr/local/share/man:/usr/share/man:"
 fi
-
-# Implement XDG settings
-export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_CACHE_HOME="$HOME/.cache"
-export XDG_DATA_HOME="$HOME/.local/share"
-export XDG_STATE_HOME="$HOME/.local/state"
 
 TEXLIVE_YEAR=2024
 if [ -d "/usr/local/texlive" ]; then
@@ -153,36 +140,28 @@ if [ -d "/usr/local/texlive" ]; then
 fi
 
 # Ruby: rbenv
-if [ -d "$HOME/.rbenv" ]; then
-    eval "$(~/.rbenv/bin/rbenv init - bash)"
+if [ -d "$RBENV_ROOT" ]; then
+    eval "$(${RBENV_ROOT}/bin/rbenv init - bash)"
 fi
 
 # Python: pyenv
-export PYENV_ROOT="$HOME/.pyenv"
-if [ -d "$PYENV_ROOT/bin" ]; then
+if [ -d "$PYENV_ROOT/bin" ]; then 
     export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init - bash)"
+    eval "$(pyenv virtualenv-init -)"
 fi
-eval "$(pyenv init -)"
 
-# Rust: Cargo
-[ -d "$HOME/.cargo" ] && . "$HOME/.cargo/env"
+# Rust: Cargo and Rustup
+[ -d "$CARGO_HOME" ] && \. "$CARGO_HOME/env"
 
 # Golang: local modules
-if [ -d "/usr/local/go/bin" ]; then
-    export PATH="$PATH:/usr/local/go/bin:${HOME}/go/bin"
-fi
+[ -d "/usr/local/go/bin" ] && export PATH="$PATH:/usr/local/go/bin:${HOME}/go/bin"
 
 # rke2
-if [ -d "/var/lib/rancher/rke2/bin" ]; then
-    export PATH="$PATH:/var/lib/rancher/rke2/bin"
-fi
+[ -d "/var/lib/rancher/rke2/bin" ] && export PATH="$PATH:/var/lib/rancher/rke2/bin"
 
 # Javascript: nvm
-export NVM_DIR="$HOME/.config/nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
 # Javascript: deno
-if [ -d "$HOME/.deno" ];then
-    . "$HOME/.deno/env"
-fi
+[ -d "$DENO_INSTALL" ] && \. "$DENO_INSTALL/env"

@@ -1,0 +1,96 @@
+#!/usr/bin/env bash
+# This script should run after dotfiles are updated locally. This means that 
+# we can expect environment variables like XDG_DATA_HOME to be present.
+# Application installs should be performed in here, as many of them
+# automatically fall back on environment variables to clean up install files.
+# Install packages in run_onchange_before_install_packages.sh.tmpl
+set -euo pipefail
+
+pushd() { 
+    command pushd "$1" >/dev/null 
+}
+
+popd() {
+    command popd >/dev/null 
+}
+
+# Source important variables
+. "$HOME/.bash_env"
+
+# == Neovim ==
+# editor
+if [ -f /usr/local/bin/nvim ]; then
+    echo "Neovim: editor already installed"
+else
+    git clone --depth=1 -b v0.12.1 https://github.com/neovim/neovim.git "$HOME/neovim" 
+    pushd "$HOME/neovim"
+    make CMAKE_BUILD_TYPE=Release -j "$(nproc --all)"
+    sudo make install
+    popd
+fi
+
+# fonts
+if [ -f "$XDG_DATA_HOME/fonts/FiraMonoNerdFontMono-Regular.otf" ]; then
+    echo "Neovim: FiraMono already installed"
+else
+    mkdir -p "$XDG_DATA_HOME/fonts"
+
+    pushd "$XDG_DATA_HOME/fonts"
+    curl -OL https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FiraMono.tar.xz &&
+	tar -xf "FiraMono.tar.xz" && 
+	rm "FiraMono.tar.xz"
+    popd
+fi
+
+# == Golang ==
+# go
+if [ -d "/usr/local/go" ]; then
+    echo "Golang: go already installed"
+else
+    wget https://go.dev/dl/go1.23.2.linux-amd64.tar.gz
+    sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf go1.23.2.linux-amd64.tar.gz
+    rm "$HOME/go1.23.2.linux-amd64.tar.gz"
+fi
+
+# == Rust ==
+# Cargo
+if [ -d "$CARGO_HOME" ]; then
+    echo "Rust: cargo already installed"
+else
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path
+fi
+
+# == Python ==
+# Pyenv
+if [ -d "$PYENV_ROOT" ]; then
+    echo "Python: pyenv already installed"
+else
+    curl https://pyenv.run | bash
+fi
+
+# == Javascript ==
+# nvm
+if [ -d "$NVM_DIR" ]; then
+    echo "JavaScript: nvm already installed"
+else
+    # The script doesn't do it for you for some reason.
+    mkdir -p "$NVM_DIR"
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | PROFILE="/dev/null" bash
+fi
+
+# deno
+if [ -d "$DENO_INSTALL" ]; then
+    echo "JavaScript: deno already installed"
+else
+    curl -fsSL https://deno.land/install.sh | sh -s -- -y --no-modify-path
+fi
+
+# == Ruby ==
+# rbenv - No initialisation required, already in .bashrc
+if [ -d "$RBENV_ROOT" ]; then
+    echo "Ruby: rbenv already installed"
+else
+    git clone https://github.com/rbenv/rbenv.git "$RBENV_ROOT"
+    git clone https://github.com/rbenv/ruby-build.git "$RBENV_ROOT/plugins/ruby-build"
+fi
+
