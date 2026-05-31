@@ -1,15 +1,6 @@
-#!/usr/bin/env bash
-# This script should run before dotfiles are updated locally. This means that 
-# we can't rely on bash variables like XDG_DATA_HOME. Essentially only packages
-# should be installed here. If an application needs to be installed, this 
-# should be done in run_onchange_after_install_applications.sh.tmpl
-set -euo pipefail
-
-to_install=()
-
-# Distro-specific package installs (ubuntu and debian separated for potential deviation)
+{{ $packages := list -}}
 {{ if eq .chezmoi.osRelease.id "ubuntu" "debian" "neon" -}}
-    to_install+=(
+{{ $packages = list
         "tmux"
 	"ripgrep"
 	"ninja-build"
@@ -43,15 +34,14 @@ to_install=()
 	"libncurses5-dev"
 	"libgdbm-dev"
 	"libdb-dev"
-	"uuid-dev"
-    )
-    {{ if eq .chezmoi.osRelease.id "debian" -}}
-	to_install+=(
-	    "command-not-found"
-	)
-    {{ end -}}
+	"uuid-dev" -}}
+
+{{ if eq .chezmoi.osRelease.id "debian" -}}
+{{   $packages = mustAppend $packages "command-not-found" -}}
+{{ end -}}
+
 {{ else if eq .chezmoi.osRelease.id "arch" -}}
-    to_install+=(
+{{ $packages = list
         "tmux"
         "ripgrep"
         "base-devel"
@@ -59,17 +49,29 @@ to_install=()
         "cmake"
         "unzip"
         "curl"
-        "fd"
-    )
+        "fd" -}}
 {{ end -}}
 
+{{ $sudo := "sudo " -}}
+{{ if eq .chezmoi.uid "0" -}}
+{{  $sudo = "" -}}
+{{ end -}}
+
+#!/usr/bin/env bash
+# This script should run before dotfiles are updated locally. This means that 
+# we can't rely on bash variables like XDG_DATA_HOME. Essentially only packages
+# should be installed here. If an application needs to be installed, this 
+# should be done in run_onchange_after_install_applications.sh.tmpl
+set -euo pipefail
 
 {{ if eq .chezmoi.osRelease.id "ubuntu" "neon" "debian" -}}
-    sudo apt update -y
-    sudo apt install -y "${to_install[@]}"
-    {{ if eq .chezmoi.osRelease.id "debian" -}}
-        sudo update-command-not-found
-    {{ end -}}
-{{ else if eq .chezmoi.osRelease.id "arch" -}}
-    pacman -S --noconfirm "${to_install[@]}"
+{{ $sudo }}apt-get update
+{{ $sudo }}apt-get install -y {{ $packages | join " " }}
+{{ if eq .chezmoi.osRelease.id "debian" -}}
+{{ $sudo }}update-command-not-found
 {{ end -}}
+{{ else if eq .chezmoi.osRelease.id "arch" -}}
+{{ $sudo }}pacman -S --noconfirm {{ $packages | join " " }}
+{{ end -}}
+
+{{/* vim: set ft=gotmpl */}}
