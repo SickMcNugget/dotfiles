@@ -6,9 +6,13 @@
 {{-		$work = true -}}
 {{- end -}}
 
+{{- $sshpriv := protonPass "pass://Personal/SSH Key/Private Key" | trim -}}
+{{- $sshpub := protonPass "pass://Personal/SSH Key/Public Key" | trim -}}
 {{- $email := protonPass "pass://Personal/gitconfig/Email" | trim -}}
 {{- $name := protonPass "pass://Personal/gitconfig/Name" | trim -}}
 {{- if $work -}}
+{{-		$sshpriv = protonPass "pass://Work/SSH Key/Private Key" | trim -}}
+{{-		$sshpub = protonPass "pass://Work/SSH Key/Public Key" | trim -}}
 {{-		$email = protonPass "pass://Work/gitconfig/Email" | trim -}}
 {{-		$name = protonPass "pass://Work/gitconfig/Name" | trim -}}
 {{- end -}}
@@ -17,6 +21,8 @@
 	email = {{ $email | quote }}
 	name = {{ $name | quote }}
 	work = {{ $work }}
+	sshpriv = {{ $sshpriv | quote }}
+	sshpub = {{ $sshpub | quote }}
 
 {{ if eq .chezmoi.os "linux" -}}
 [edit]
