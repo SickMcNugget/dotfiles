@@ -1,19 +1,81 @@
 [user]
 	name = {{ .name }}
 	email = {{ .email }}
+[alias]
+	a = add
+	ap = add -p
+	b = branch
+	c = clone
+	ca = commit --amend
+	caa = commit -a --amend
+	cm = commit --message
+	co = checkout
+	cob = checkout -b
+	com = checkout master
+	cp = cherry-pick
+	d = diff
+	dc = diff --cached
+	ds = diff --staged
+	dom = diff origin/master
+	fo = fetch origin
+	g = grep --line-number
+	ol = log --pretty=oneline
+	l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+	p = push
+	pf = push --force-with-lease
+	prb = pull --rebase
+	r = restore
+	ra = rebase --abort
+	rc = rebase --continue
+	ri = rebase --interactive
+	riom = rebase --interactive origin/master
+	rl = reflog
+	s = status -sb
+	su = submodule update
+[color]
+	ui = auto
+[column]
+	ui = auto
+[core]
+	editor = nvim
+{{- $ghPath := lookPath "gh" }}
+{{- if $ghPath }}
+[credential "https://github.com"]
+	helper = !{{ $ghPath }} auth git-credential
+{{- end }}
 [credential]
 	helper = store --file ~/.my-credentials
+[diff]
+	algorithm = histogram
+	renameLimit = 8192
+	renames = true
+[fetch]
+	prune = true
 [init]
-	defaultBranch = main
+	defaultBranch = master
+[merge]
+	conflictStyle = zdiff3
+	tool = meld
+[pager]
+	branch = false
+	grep = false
 [pull]
 	rebase = true
-[merge]
-	tool = meld
+[push]
+	autoSetupRemote = true
+[rebase]
+	autoSquash = true
+	updateRefs = true
+[status]
+	submoduleSummary = true
+[tag]
+	sort = version:refname
+[transfer]
+	fsckObjects = true
 {{- if .work }}
 [url "git@gitlab.base"]
 	insteadOf = https://gitlab.base
 [url "git@gitlab.base:"]
 	insteadOf = https://gitlab.base/
 {{- end }}
-[color]
-	ui = auto
+{{/* vim: set filetype=gitconfig: */}}
