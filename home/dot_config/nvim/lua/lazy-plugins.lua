@@ -206,19 +206,6 @@ lazy.setup({
 		ft = { "markdown" },
 	},
 	{
-		"kkoomen/vim-doge",
-		lazy = false,
-		build = function()
-			vim.fn["doge#install"]()
-		end,
-		init = function()
-			vim.g["doge_doc_standard_python"] = "numpy"
-		end,
-		config = function()
-			vim.keymap.set("n", "md", "<Plug>(doge-generate)")
-		end,
-	},
-	{
 		"lambdalisue/suda.vim",
 		lazy = false,
 		-- event = "VeryLazy",
@@ -231,8 +218,4 @@ lazy.setup({
 	-- 	event = "InsertEnter",
 	-- 	config = true,
 	-- },
-	{
-		"Makaze/AnsiEsc",
-		cmd = { "AnsiEsc" },
-	},
 }, lazy_opts)
