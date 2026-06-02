@@ -53,11 +53,27 @@ else
 fi
 
 # == Rust ==
-# Cargo
-if [ -d "$CARGO_HOME" ]; then
+# We can't rely on applications being on path in this script
+cargo_bin="$CARGO_HOME/bin/cargo"
+if [ -f "$cargo_bin" ]; then
     echo "Rust: cargo already installed"
 else
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path
+fi
+
+# cargo-binstall for binaries
+if [ -n "$("$cargo_bin" -q --list | tail -n+1 | awk '$1 ~ /^binstall$/')" ]; then
+    echo "Rust: cargo-binstall already installed"
+else
+    curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/v1.19.1/install-from-binstall-release.sh | bash
+fi
+binstall=("$cargo_bin" "binstall" "-y" "--disable-telemetry" "--no-track")
+
+# tree-sitter-cli
+if [ -f "$CARGO_HOME/bin/tree-sitter" ]; then
+    echo "Rust: tree-sitter-cli already installed"
+else
+    "${binstall[@]}" tree-sitter-cli
 fi
 
 # == Python ==

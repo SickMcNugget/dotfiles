@@ -110,7 +110,10 @@ lazy.setup({
 		require("plugins.which-key"),
 	},
 	{
-		require("plugins.treesitter"),
+		require("plugins.nvim-treesitter"),
+	},
+	{
+		require("plugins.nvim-treesitter-textobjects"),
 	},
 	{
 		"kylechui/nvim-surround",
