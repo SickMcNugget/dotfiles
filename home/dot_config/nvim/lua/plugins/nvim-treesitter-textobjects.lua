@@ -6,6 +6,7 @@ return {
 		-- See https://github.com/neovim/neovim/tree/master/runtime/ftplugin for built-in ftplugins.
 		vim.g.no_plugin_maps = true
 	end,
+	event = { "BufReadPost", "BufNewFile", "BufFilePost" },
 	config = function()
 		require("nvim-treesitter-textobjects").setup({
 			select = {
@@ -20,7 +21,7 @@ return {
 		local function map_select(keymap, object)
 			vim.keymap.set({ "x", "o" }, keymap, function()
 				require("nvim-treesitter-textobjects.select").select_textobject(object, "textobjects")
-			end)
+			end, {desc = "(Visual) Select " .. object})
 		end
 
 		map_select("ac", "@class.outer")
@@ -59,7 +60,7 @@ return {
 
 			vim.keymap.set(modes, keymap, function()
 				move_type(object, "textobjects")
-			end, { desc = "[" .. keymap .. "] Jump to " .. type_repr .. object })
+			end, { desc = "Jump to " .. type_repr .. object })
 		end
 
 		map_move("]f", "@function.outer", 1)
