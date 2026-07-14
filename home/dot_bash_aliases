@@ -14,3 +14,4 @@ alias gnp="git --no-pager"
 alias utc='date -u +"%Y-%m-%dT%H:%M:%S.%3NZ"'
 alias configrep='grep /boot/config-$(uname -r) -ie '
 alias modfind='find /lib/modules/$(uname -r) -name '
+alias cm='chezmoi '
