@@ -82,3 +82,13 @@ end, { desc = "Uniformly toggle semicolons for selection lines" })
 vim.keymap.set("n", "<M-j>", "<cmd>cnext<CR>")
 vim.keymap.set("n", "<M-k>", "<cmd>cprev<CR>")
 vim.keymap.set("n", "<M-q>", "<cmd>cclose<CR>")
+
+-- Unbind LSP default binds
+vim.keymap.del("i", "<C-S>")
+vim.keymap.del("n", "gO")
+vim.keymap.del({ "x", "n" }, "gra")
+vim.keymap.del("n", "gri")
+vim.keymap.del("n", "grn")
+vim.keymap.del("n", "grr")
+vim.keymap.del("n", "grt")
+vim.keymap.del("n", "grx")
