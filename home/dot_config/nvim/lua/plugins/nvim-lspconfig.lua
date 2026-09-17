@@ -61,7 +61,8 @@ return {
 			rust_analyzer = {},
 			clangd = {},
 			lua_ls = {},
-			pylsp = {},
+			basedpyright = {},
+			ruff = {},
 		}
 
 		for server, _ in pairs(servers) do
