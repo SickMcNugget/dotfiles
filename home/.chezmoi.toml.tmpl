@@ -1,26 +1,15 @@
-{{- $work := false -}}{{/* true on work machine */}}
-{{- "" -}}
+{{- $choices := list "Personal" "Work" "Gamedev" -}}
+{{- $hosttype := promptChoice "What type of host are you on?" $choices -}}
 
-{{- $hostname := .chezmoi.hostname -}}
-{{- if eq $hostname "j-work" -}}
-{{-		$work = true -}}
-{{- end -}}
-
-{{- $sshpriv := protonPass "pass://Personal/SSH Key/Private Key" | trim -}}
-{{- $sshpub := protonPass "pass://Personal/SSH Key/Public Key" | trim -}}
-{{- $email := protonPass "pass://Personal/gitconfig/Email" | trim -}}
-{{- $name := protonPass "pass://Personal/gitconfig/Name" | trim -}}
-{{- if $work -}}
-{{-		$sshpriv = protonPass "pass://Work/SSH Key/Private Key" | trim -}}
-{{-		$sshpub = protonPass "pass://Work/SSH Key/Public Key" | trim -}}
-{{-		$email = protonPass "pass://Work/gitconfig/Email" | trim -}}
-{{-		$name = protonPass "pass://Work/gitconfig/Name" | trim -}}
-{{- end -}}
+{{- $sshpriv := protonPass (printf "pass://%s/SSH Key/Private Key" $hosttype) | trim -}}
+{{- $sshpub := protonPass (printf "pass://%s/SSH Key/Public Key" $hosttype) | trim -}}
+{{- $email := protonPass (printf "pass://%s/gitconfig/Email" $hosttype) | trim -}}
+{{- $name := protonPass (printf "pass://%s/gitconfig/Name" $hosttype) | trim -}}
 
 [data]
 	email = {{ $email | quote }}
 	name = {{ $name | quote }}
-	work = {{ $work }}
+	hosttype = {{ $hosttype | quote }}
 	sshpriv = {{ $sshpriv | quote }}
 	sshpub = {{ $sshpub | quote }}
 

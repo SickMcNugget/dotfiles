@@ -75,7 +75,7 @@
 	sort = version:refname
 [transfer]
 	fsckObjects = true
-{{- if .work }}
+{{- if eq .hosttype "Work" }}
 [url "git@gitlab.base"]
 	insteadOf = https://gitlab.base
 [url "git@gitlab.base:"]
