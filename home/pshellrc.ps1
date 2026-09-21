@@ -136,3 +136,12 @@ function Copy-UnityProject {
 
     return 0
 }
+
+$aliases = @{
+    cm = 'chezmoi'
+    g = 'git'
+}
+
+foreach ($alias in $aliases.GetEnumerator()) {
+    Set-Alias -Name $alias.Key -Value $alias.Value
+}
