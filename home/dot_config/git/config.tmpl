@@ -44,6 +44,10 @@
 	ui = auto
 [core]
 	editor = nvim
+{{- if eq .chezmoi.os "windows" }}
+	autocrlf = false
+	eol = lf
+{{- end }}
 {{- $ghPath := lookPath "gh" }}
 {{- if $ghPath }}
 [credential "https://github.com"]
