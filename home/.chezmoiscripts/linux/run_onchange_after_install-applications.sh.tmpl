@@ -94,6 +94,13 @@ else
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | PROFILE="/dev/null" bash
 fi
 
+# pnpm
+if [ -d "$PNPM_HOME" ]; then
+    echo "JavaScript: pnpm already installed"
+else
+    curl -fsSL https://get.pnpm.io | sh -
+fi
+
 # deno
 if [ -d "$DENO_INSTALL" ]; then
     echo "JavaScript: deno already installed"

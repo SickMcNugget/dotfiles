@@ -169,5 +169,8 @@ fi
 # Javascript: nvm
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
+# Javascript: pnpm
+[ -d  "$PNPM_HOME" ] && append_unique PATH "$PNPM_HOME/bin"
+
 # Javascript: deno
 [ -d "$DENO_INSTALL" ] && \. "$DENO_INSTALL/env"
