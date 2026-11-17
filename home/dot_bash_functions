@@ -194,3 +194,10 @@ function copy-unity-project() (
 		fi
 	done
 )
+
+# Disable the current venv environment if one is active
+# Returns: 0 if an environment was deactivated, 1 otherwise.
+function vd() {
+	# My criteria for an active environment is the VIRTUAL_ENV environment variable
+	test -n "$VIRTUAL_ENV" && deactivate
+}
