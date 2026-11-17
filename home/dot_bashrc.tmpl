@@ -124,8 +124,14 @@ fi
 # kind of forced my hand.
 [ -f ~/.bash_env ] && \. ~/.bash_env
 
-# export JAVA_HOME="/usr/lib/jvm/java-1.11.0-openjdk-amd64"
-# export PATH="$JAVA_HOME/bin:${PATH:+${PATH}}"
+# This function is meant for PATH-type variables that shouldn't
+# be muddied on successive sourcing.
+append_unique() {
+    local var="$1" value="$2" current="${!1}"
+    [[ ":$current:" == *":$value:"* ]] && return
+    printf -v "$var" '%s' "${current:+$current:}$value"
+    export "$var"
+}
 
 # Set default MANPATH
 if [ -z "$MANPATH" ]; then
@@ -134,9 +140,9 @@ fi
 
 TEXLIVE_YEAR=2024
 if [ -d "/usr/local/texlive" ]; then
-    export MANPATH="/usr/local/texlive/${TEXLIVE_YEAR}/texmf-dist/doc/man${MANPATH:+:${MANPATH}}"
-    export INFOPATH="/usr/local/texlive/${TEXLIVE_YEAR}/texmf-dist/doc/info${INFOPATH:+:${INFOPATH}}"
-    export PATH="/usr/local/texlive/${TEXLIVE_YEAR}/bin/x86_64-linux${PATH:+:${PATH}}"
+    append_unique MANPATH "/usr/local/texlive/${TEXLIVE_YEAR}/texmf-dist/doc/man"
+    append_unique INFOPATH "/usr/local/texlive/${TEXLIVE_YEAR}/texmf-dist/doc/info"
+    append_unique PATH "/usr/local/texlive/${TEXLIVE_YEAR}/bin/x86_64-linux"
 fi
 
 # Ruby: rbenv
@@ -146,7 +152,7 @@ fi
 
 # Python: pyenv
 if [ -d "$PYENV_ROOT/bin" ]; then 
-    export PATH="$PYENV_ROOT/bin:$PATH"
+    append_unique PATH "$PYENV_ROOT/bin"
     eval "$(pyenv init - bash)"
     eval "$(pyenv virtualenv-init -)"
 fi
@@ -155,10 +161,10 @@ fi
 [ -d "$CARGO_HOME" ] && \. "$CARGO_HOME/env"
 
 # Golang: local modules
-[ -d "/usr/local/go/bin" ] && export PATH="$PATH:/usr/local/go/bin:${HOME}/go/bin"
+[ -d "/usr/local/go/bin" ] && append_unique PATH "/usr/local/go/bin:${HOME}/go/bin"
 
 # rke2
-[ -d "/var/lib/rancher/rke2/bin" ] && export PATH="$PATH:/var/lib/rancher/rke2/bin"
+[ -d "/var/lib/rancher/rke2/bin" ] && append_unique PATH "/var/lib/rancher/rke2/bin"
 
 # Javascript: nvm
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
